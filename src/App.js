@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter, Switch, Route, Link} from 'react-router-dom'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// Pages
+import Landing from './pages/Landing'
+import Meets from './pages/Meets'
+import SignUp from './pages/SignUp'
+import SignIn from './pages/SignIn'
+import ResetPassword from './pages/ResetPassword'
+
+// Routes
+import * as ROUTE from './constants/routes'
+
+import {AuthProvider} from './contexts/AuthContext'
+import PrivateRoute from "./components/PrivateRoute";
+
+export default function App() {
+    return (
+        <AuthProvider>
+            <BrowserRouter>
+                <Link to={ROUTE.MEETS}>Meets</Link><br/>
+                <Link to={ROUTE.SIGNUP}>Sign Up</Link><br/>
+                <Link to={ROUTE.SIGNIN}>Sign In</Link><br/>
+                <Link to={ROUTE.RESET_PASSWORD}>Reset Password</Link><br/>
+                <Switch>
+                    <Route path={ROUTE.LANDING} exact component={Landing}/>
+                    <PrivateRoute path={ROUTE.MEETS} exact component={Meets}/>
+                    <Route path={ROUTE.SIGNUP} component={SignUp}/>
+                    <Route path={ROUTE.SIGNIN} component={SignIn}/>
+                    <Route path={ROUTE.RESET_PASSWORD} component={ResetPassword}/>
+                </Switch>
+            </BrowserRouter>
+        </AuthProvider>
+    )
 }
-
-export default App;
