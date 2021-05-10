@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import {useParams} from 'react-router-dom'
 
 import {useDocument, joinMeet} from '../adapters/meets'
@@ -10,14 +10,20 @@ const Meet = () => {
     const document = useDocument('meets', id)
     const members = document.members
 
+    const fromRef = useRef()
+    const toRef = useRef()
+
     const handleJoin = () => {
         const meetId = id
         const uid = currentUser.uid
         const name = currentUser.displayName
-        const from = 10
-        const to = 19
+        const from = fromRef.current.value
+        const to = toRef.current.value
 
         joinMeet(meetId, uid, name, from, to)
+
+        fromRef.current.value = ''
+        toRef.current.value = ''
     }
 
     return (
@@ -37,6 +43,18 @@ const Meet = () => {
                 ))}
                 </ul>
             </div>
+            <label>From:
+                <input
+                    type='text'
+                    ref={fromRef}
+                />
+            </label><br/>
+            <label>To:
+                <input
+                    type='text'
+                    ref={toRef}
+                />
+            </label><br/>
             <button
             // disabled={currentUser.uid === document.uid}
                 onClick={handleJoin}
