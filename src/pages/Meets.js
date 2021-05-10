@@ -28,7 +28,7 @@ const Meets = () => {
                     <Link to={'/meets/' + item.id} key={item.id}><li><b>{item.name}</b> {Date(item.date)}</li></Link>
                 ))}
             </ul>
-            <button onClick={() => handleAdd()}>Add Note</button>
+            <button onClick={handleAdd}>Add Note</button>
         </div>
     )
 }

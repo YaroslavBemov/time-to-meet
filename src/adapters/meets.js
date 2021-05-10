@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react'
 
+import firebase from 'firebase/app'
 import {db} from './firebase'
 
 export function useCollection(title) {
@@ -18,17 +19,6 @@ export function useCollection(title) {
     return list
 }
 
-export function addMeet(uid, name, date, from, to) {
-    db.collection('meets')
-        .add({
-            uid,
-            name,
-            date,
-            from,
-            to
-        })
-}
-
 export function useDocument(collectionTitle, documentId) {
     const [document, setDocument] = useState([])
 
@@ -42,4 +32,34 @@ export function useDocument(collectionTitle, documentId) {
             })
     }, [])
     return document
+}
+
+export function addMeet(uid, name, date, from, to) {
+    db.collection('meets')
+        .add({
+            uid,
+            name,
+            date,
+            from,
+            to
+        })
+}
+
+export function joinMeet(meetId, uid, name, from, to) {
+    db.collection('meets')
+        .doc(meetId)
+        .update({
+            members: firebase.firestore.FieldValue.arrayUnion({
+                uid: uid,
+                name: name,
+                from: from,
+                to: to
+            })
+        })
+        .then(() => {
+            console.log("Document successfully updated!")
+        })
+        .catch(error => {
+            console.log(error.message())
+        })
 }

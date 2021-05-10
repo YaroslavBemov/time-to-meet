@@ -3,7 +3,7 @@ import {useHistory} from 'react-router-dom'
 
 import {useAuth} from '../contexts/AuthContext'
 
-import {LANDING} from '../constants/routes'
+import {MEETS} from '../constants/routes'
 
 const SignUp = () => {
     const [loading, setLoading] = useState(false)
@@ -29,7 +29,7 @@ const SignUp = () => {
         signUpWithEmailAndPassword(email, password, userName)
             .then(() => {
                 setLoading(false)
-                history.push(LANDING)
+                history.push(MEETS)
             })
             .catch(error => {
                 setError(error.message)
