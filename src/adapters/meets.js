@@ -2,23 +2,23 @@ import {useEffect, useState} from 'react'
 
 import {db} from './firebase'
 
-export function useAllMeets() {
-    const [meets, setMeets] = useState([])
+export function useCollection(title) {
+    const [list, setList] = useState([])
 
     useEffect(() => {
-        db.collection('meets')
+        db.collection(title)
             .onSnapshot(snapshot => {
-                const list = snapshot.docs.map(doc => ({
+                const lists = snapshot.docs.map(doc => ({
                     id: doc.id,
                     ...doc.data(),
                 }))
-                setMeets(list)
+                setList(lists)
             })
     }, [])
-    return meets
+    return list
 }
 
-export function addNote(uid, name, date, from, to) {
+export function addMeet(uid, name, date, from, to) {
     db.collection('meets')
         .add({
             uid,
@@ -27,4 +27,19 @@ export function addNote(uid, name, date, from, to) {
             from,
             to
         })
+}
+
+export function useDocument(collectionTitle, documentId) {
+    const [document, setDocument] = useState([])
+
+    useEffect(() => {
+        db.collection(collectionTitle)
+            .doc(documentId)
+            .onSnapshot(doc => {
+                const data = doc.data()
+                console.log(data)
+                setDocument(data)
+            })
+    }, [])
+    return document
 }

@@ -1,23 +1,23 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
-import {addNote, useAllMeets} from '../adapters/meets'
+import {useAuth} from '../contexts/AuthContext'
+import {addMeet, useCollection} from '../adapters/meets'
 
 import faker from 'faker'
-import {useAuth} from "../contexts/AuthContext";
-import {Link} from "react-router-dom";
 
 const Meets = () => {
-    const meets = useAllMeets()
+    const meets = useCollection('meets')
     const {currentUser} = useAuth()
 
     const handleAdd = () => {
         const uid = currentUser.uid
         const name = currentUser.displayName
         const date = new Date()
-        const from = 9
-        const to = 19
+        const from = 8
+        const to = 20
 
-        addNote(uid, name, date, from, to)
+        addMeet(uid, name, date, from, to)
     }
 
     return (
