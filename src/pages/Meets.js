@@ -5,6 +5,7 @@ import {useAuth} from '../contexts/AuthContext'
 import {addMeet, useCollection} from '../adapters/meets'
 
 import faker from 'faker'
+import moment from 'moment'
 
 const Meets = () => {
     const meets = useCollection('meets')
@@ -13,7 +14,7 @@ const Meets = () => {
     const handleAdd = () => {
         const uid = currentUser.uid
         const name = currentUser.displayName
-        const date = new Date()
+        const date = moment().format('MMM Do YYYY')
         const from = 8
         const to = 20
 
@@ -25,10 +26,10 @@ const Meets = () => {
             <h1>Meets</h1>
             <ul>
                 {meets && meets.map(item => (
-                    <Link to={'/meets/' + item.id} key={item.id}><li><b>{item.name}</b> {Date(item.date)}</li></Link>
+                    <Link to={'/meets/' + item.id} key={item.id}><li><b>{item.name}</b> {item.date}</li></Link>
                 ))}
             </ul>
-            <button onClick={handleAdd}>Add Note</button>
+            <button onClick={handleAdd}>Add Meet</button>
         </div>
     )
 }

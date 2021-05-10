@@ -25,7 +25,7 @@ const Meet = () => {
             <div>
                 <h1>ID={id}</h1>
                 <p>{document.name}</p>
-                <p>{Date(document.date)}</p>
+                <p>{document.date}</p>
                 <p>From: {document.from}</p>
                 <p>To: {document.to}</p>
             </div>
