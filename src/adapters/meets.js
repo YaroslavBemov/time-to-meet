@@ -46,7 +46,7 @@ export function addMeet(uid, name, date, from, to) {
             console.log("Document successfully created!")
         })
         .catch(error => {
-            console.log(error.message())
+            console.log(error.message)
         })
 }
 
@@ -65,6 +65,6 @@ export function joinMeet(meetId, uid, name, from, to) {
             console.log("Document successfully updated!")
         })
         .catch(error => {
-            console.log(error.message())
+            console.log(error.message)
         })
 }
