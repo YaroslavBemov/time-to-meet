@@ -27,7 +27,6 @@ export function useDocument(collectionTitle, documentId) {
             .doc(documentId)
             .onSnapshot(doc => {
                 const data = doc.data()
-                console.log(data)
                 setDocument(data)
             })
     }, [])
@@ -42,6 +41,12 @@ export function addMeet(uid, name, date, from, to) {
             date,
             from,
             to
+        })
+        .then(() => {
+            console.log("Document successfully updated!")
+        })
+        .catch(error => {
+            console.log(error.message())
         })
 }
 
