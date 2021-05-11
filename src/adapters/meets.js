@@ -43,7 +43,7 @@ export function addMeet(uid, name, date, from, to) {
             to
         })
         .then(() => {
-            console.log("Document successfully updated!")
+            console.log("Document successfully created!")
         })
         .catch(error => {
             console.log(error.message())
