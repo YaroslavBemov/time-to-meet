@@ -1,0 +1,6 @@
+export const LANDING = '/'
+export const MEETS = '/meets'
+export const MEET = '/meets/:id'
+export const SIGNUP = '/signup'
+export const SIGNIN = '/signin'
+export const RESET_PASSWORD = '/reset'
