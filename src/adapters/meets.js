@@ -7,7 +7,7 @@ export function useCollection(title) {
     const [list, setList] = useState([])
 
     useEffect(() => {
-        db.collection(title)
+        return db.collection(title)
             .onSnapshot(snapshot => {
                 const lists = snapshot.docs.map(doc => ({
                     id: doc.id,
@@ -15,7 +15,7 @@ export function useCollection(title) {
                 }))
                 setList(lists)
             })
-    }, [])
+    }, [title])
     return list
 }
 
@@ -23,13 +23,13 @@ export function useDocument(collectionTitle, documentId) {
     const [document, setDocument] = useState([])
 
     useEffect(() => {
-        db.collection(collectionTitle)
+        return db.collection(collectionTitle)
             .doc(documentId)
             .onSnapshot(doc => {
                 const data = doc.data()
                 setDocument(data)
             })
-    }, [])
+    }, [collectionTitle, documentId])
     return document
 }
 

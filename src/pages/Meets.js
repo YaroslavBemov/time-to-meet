@@ -4,9 +4,6 @@ import {Link} from 'react-router-dom'
 import {useAuth} from '../contexts/AuthContext'
 import {addMeet, useCollection} from '../adapters/meets'
 
-import faker from 'faker'
-import moment from 'moment'
-
 const Meets = () => {
     const meets = useCollection('meets')
     const {currentUser} = useAuth()
