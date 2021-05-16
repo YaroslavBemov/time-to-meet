@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 
 import firebase from 'firebase/app'
 import {db} from './firebase'
-
+//TODO fix no-op, when join to meet
 export function useCollection(title) {
     const [list, setList] = useState([])
 
