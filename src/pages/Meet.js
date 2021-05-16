@@ -31,13 +31,9 @@ const Meet = () => {
 
             if (document.members) {
                 const count = document.members.length
-                console.log(`Count = ${count}`)
 
                 for (let i = 0; i < count; i++) {
-                    console.log(`i = ${i}`)
                     result = compareRange(result, members[i])
-                    console.log(`result = ...`)
-                    console.log(result)
                 }
             }
 
