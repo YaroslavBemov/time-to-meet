@@ -1,8 +1,10 @@
-import React, {useRef} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {useParams} from 'react-router-dom'
 
 import {useDocument, joinMeet} from '../adapters/meets'
 import {useAuth} from '../contexts/AuthContext'
+
+import compareRange from '../utils/compareRange'
 
 const Meet = () => {
     const {currentUser} = useAuth()
@@ -12,6 +14,45 @@ const Meet = () => {
 
     const fromRef = useRef()
     const toRef = useRef()
+
+    const [total, setTotal] = useState({
+        from: '...',
+        to: '...'
+    })
+
+    const didMount = useRef(false)
+
+    useEffect(() => {
+        if (didMount.current) {
+            let result = {
+                from: document.from,
+                to: document.to
+            }
+
+            if (document.members) {
+                const count = document.members.length
+                console.log(`Count = ${count}`)
+
+                for (let i = 0; i < count; i++) {
+                    console.log(`i = ${i}`)
+                    result = compareRange(result, members[i])
+                    console.log(`result = ...`)
+                    console.log(result)
+                }
+            }
+
+            if (+result.from > +result.to) {
+                [result.from, result.to] = [result.to, result.from]
+            }
+
+            setTotal({
+                from: result.from,
+                to: result.to
+            })
+        } else {
+            didMount.current = true
+        }
+    }, [document])
 
     const handleJoin = () => {
         const meetId = id
@@ -30,18 +71,19 @@ const Meet = () => {
         <div>
             <div>
                 <h1>ID={id}</h1>
-                <p>{document.name}</p>
-                <p>{document.date}</p>
-                <p>From: {document.from}</p>
-                <p>To: {document.to}</p>
+                <p>Who: <b>{document.name}</b></p>
+                <p>When: <b>{document.date}</b></p>
+                <p>From: <b>{document.from}</b> To: <b>{document.to}</b></p>
             </div>
             <div>
-                <h2>Members</h2>
+                <h3>Members</h3>
                 <ul>
-                {members && members.map(item => (
-                    <li key={item.uid}>Name: {item.name} from: {item.from} to: {item.to}</li>
-                ))}
+                    {members && members.map(item => (
+                        <li key={item.uid}>Name: {item.name} from: <b>{item.from}</b> to: <b>{item.to}</b></li>
+                    ))}
                 </ul>
+                <h3>Total</h3>
+                <p>From: <b>{total.from}</b> To: <b>{total.to}</b></p>
             </div>
             <label>From:
                 <input
@@ -56,9 +98,10 @@ const Meet = () => {
                 />
             </label><br/>
             <button
-            // disabled={currentUser.uid === document.uid}
+                // disabled={currentUser.uid === document.uid}
                 onClick={handleJoin}
-            >Join</button>
+            >Join
+            </button>
         </div>
 
     )
