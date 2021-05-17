@@ -1,11 +1,13 @@
-import React, {useRef} from 'react'
+import React, {useEffect, useRef} from 'react'
 import {Link} from 'react-router-dom'
 
 import {useAuth} from '../contexts/AuthContext'
-import {addMeet, useCollection} from '../adapters/meets'
+import {useMeet} from '../contexts/MeetContext'
+
 
 const Meets = () => {
-    const meets = useCollection('meets')
+    const {collection, getCollection, addDocument} = useMeet()
+
     const {currentUser} = useAuth()
 
     const whenRef = useRef()
@@ -19,17 +21,24 @@ const Meets = () => {
         const from = fromRef.current.value
         const to = toRef.current.value
 
-        addMeet(uid, name, date, from, to)
+        addDocument('meets', uid, name, date, from, to)
 
         fromRef.current.value = ''
         toRef.current.value = ''
     }
 
+    useEffect(() => {
+        console.log('Render in Meets')
+        getCollection('meets')
+
+        return () => {console.log('Render out Meets')}
+    }, [])
+
     return (
         <div>
             <h1>Meets</h1>
             <ul>
-                {meets && meets.map(item => (
+                {collection && collection.map(item => (
                     <Link to={'/meets/' + item.id} key={item.id}><li><b>{item.name}</b> {item.date}</li></Link>
                 ))}
             </ul>
