@@ -8,9 +8,7 @@ import {MeetProvider} from './contexts/MeetContext'
 ReactDOM.render(
     <React.StrictMode>
         <AuthProvider>
-            <MeetProvider>
                 <App/>
-            </MeetProvider>
         </AuthProvider>
     </React.StrictMode>,
     document.getElementById('root')

@@ -14,14 +14,18 @@ import PrivateRoute from './components/PrivateRoute'
 
 import NavBar from './components/NavBar'
 
+import {MeetProvider} from './contexts/MeetContext'
+
 export default function App() {
     return (
         <BrowserRouter>
             <NavBar/>
             <Switch>
                 <Route path={ROUTE.LANDING} exact component={Landing}/>
-                <PrivateRoute path={ROUTE.MEETS} exact component={Meets}/>
-                <PrivateRoute path={ROUTE.MEET} component={Meet}/>
+                <MeetProvider>
+                    <PrivateRoute path={ROUTE.MEETS} exact component={Meets}/>
+                    <PrivateRoute path={ROUTE.MEET} component={Meet}/>
+                </MeetProvider>
                 <Route path={ROUTE.SIGNUP} component={SignUp}/>
                 <Route path={ROUTE.SIGNIN} component={SignIn}/>
                 <Route path={ROUTE.RESET_PASSWORD} component={ResetPassword}/>

@@ -16,7 +16,8 @@ export function MeetProvider({children}) {
 
     // TODO unsubscribe
     const getCollection = (title) => {
-        unsubscribeCollection = db.collection(title)
+        unsubscribeCollection = db
+            .collection(title)
             .onSnapshot(snapshot => {
                 let list = snapshot.docs.map(doc => ({
                     id: doc.id,
@@ -28,11 +29,13 @@ export function MeetProvider({children}) {
 
     // TODO unsubscribe
     const getDocument = (collectionTitle, documentId) => {
-        unsubscribeDocument = db.collection(collectionTitle)
+        unsubscribeDocument = db
+            .collection(collectionTitle)
             .doc(documentId)
             .onSnapshot(doc => {
                 const data = doc.data()
                 setDocument(data)
+                console.log(document)
             })
     }
 
@@ -82,8 +85,8 @@ export function MeetProvider({children}) {
         console.log('Render in MeetsContext')
 
         return () => {
-            unsubscribeCollection()
-            unsubscribeDocument()
+            unsubscribeCollection && unsubscribeCollection()
+            unsubscribeDocument && unsubscribeDocument()
             console.log('Render out MeetsContext')
         }
     }, [])

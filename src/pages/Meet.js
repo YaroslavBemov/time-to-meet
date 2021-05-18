@@ -7,46 +7,14 @@ import {useMeet} from '../contexts/MeetContext'
 import compareRange from '../utils/compareRange'
 
 const Meet = () => {
+    console.log('MEEEEEEEEEEEET')
     const {id} = useParams()
     const {currentUser} = useAuth()
 
     const fromRef = useRef()
     const toRef = useRef()
-    const totalRef = useRef({})
-    // const isJoinDisable = useRef(false)
 
     const {document, getDocument, joinToMeet, deleteDocument} = useMeet()
-    const members = document.members
-
-    if (members) {
-        let result = {
-            from: document.from,
-            to: document.to
-        }
-
-        if (+result.from > +result.to) {
-            [result.from, result.to] = [result.to, result.from]
-        }
-
-        const count = members.length
-
-        for (let i = 0; i < count; i++) {
-            result = compareRange(result, members[i])
-        }
-
-        //TODO don't work!!!
-        totalRef.current = {
-            from: result.from,
-            to: result.to
-        }
-        //TODO bad way, bug, not updates
-        // isJoinDisable.current = !!members.find(member => member.uid === document.uid)
-    } else {
-        totalRef.current = {
-            from: document.from,
-            to: document.to
-        }
-    }
 
     const handleJoin = () => {
         const meetId = id
@@ -61,10 +29,63 @@ const Meet = () => {
         toRef.current.value = ''
     }
 
+    const didMount = React.useRef(false)
+
+    let members, total, isJoinDisable
+
+    let result = {
+        from: document.from,
+        to: document.to
+    }
+
+    if (+result.from > +result.to) {
+        [result.from, result.to] = [result.to, result.from]
+    }
+    console.log(`result.from = ${result.from}`)
+    console.log(`result.to = ${result.to}`)
+
+    if (document.members) {
+        members = document.members
+
+        console.log(document.members)
+        console.log(members)
+
+        const count = members.length
+        console.log(`count = ${count}`)
+
+        for (let i = 0; i < count; i++) {
+            result = compareRange(result, members[i])
+        }
+
+        //TODO bad way, bug, not updates
+        isJoinDisable = !!members.find(member => member.uid === document.uid)
+        console.log(`isJoinDisable = ${isJoinDisable}`)
+    } else {
+        isJoinDisable = false
+    }
+
+    //TODO don't work!!!
+    total = {
+        from: result.from,
+        to: result.to
+    }
+
     useEffect(() => {
         console.log('Render in MEET')
-        getDocument('meets', id)
+        if (didMount.current) {
+            console.log('On update')
+            console.log(document)
 
+
+
+        } else {
+            console.log('on first')
+
+            getDocument('meets', id)
+
+            didMount.current = true
+        }
+        getDocument('meets', id)
         return () => {
             console.log('Render out MEET')
         }
@@ -86,7 +107,7 @@ const Meet = () => {
                     ))}
                 </ul>
                 <h3>Total</h3>
-                <p>From: <b>{totalRef.current.from}</b> To: <b>{totalRef.current.to}</b></p>
+                <p>From: <b>{total && total.from}</b> To: <b>{total && total.to}</b></p>
             </div>
             <label>From:
                 <input
@@ -101,7 +122,7 @@ const Meet = () => {
                 />
             </label><br/>
             <button
-                // disabled={isJoinDisable.current}
+                disabled={isJoinDisable}
                 onClick={handleJoin}
             >Join
             </button>
