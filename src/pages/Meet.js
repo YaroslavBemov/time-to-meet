@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react'
-import {useParams} from 'react-router-dom'
+import {useParams, useHistory} from 'react-router-dom'
 
 import {useAuth} from '../contexts/AuthContext'
 import {useMeet} from '../contexts/MeetContext'
@@ -14,49 +14,35 @@ const Meet = () => {
     const toRef = useRef()
     const totalRef = useRef({})
 
-    const {document, getDocument, joinToMeet} = useMeet()
+    const {document, getDocument, joinToMeet, deleteDocument} = useMeet()
     const members = document.members
 
+    if (members) {
+        let result = {
+            from: document.from,
+            to: document.to
+        }
 
-    // const [total, setTotal] = useState({
-    //     from: '...',
-    //     to: '...'
-    // })
+        if (+result.from > +result.to) {
+            [result.from, result.to] = [result.to, result.from]
+        }
 
-    // const didMount = useRef(false)
+        const count = members.length
 
-    useEffect(() => {
-        console.log('Render in MEET')
-        getDocument('meets', id)
-        console.log(document)
-        // if (didMount.current) {
-        //     let result = {
-        //         from: document.from,
-        //         to: document.to
-        //     }
-        //
-        //     if (document.members) {
-        //         const count = document.members.length
-        //
-        //         for (let i = 0; i < count; i++) {
-        //             result = compareRange(result, members[i])
-        //         }
-        //     }
-        //
-        //     if (+result.from > +result.to) {
-        //         [result.from, result.to] = [result.to, result.from]
-        //     }
+        for (let i = 0; i < count; i++) {
+            result = compareRange(result, members[i])
+        }
 
-            // setTotal({
-            //     from: result.from,
-            //     to: result.to
-            // })
-        // } else {
-        //     didMount.current = true
-        // }
-
-        return () => {console.log('Render out MEET')}
-    }, [])
+        totalRef.current = {
+            from: result.from,
+            to: result.to
+        }
+    } else {
+        totalRef.current = {
+            from: document.from,
+            to: document.to
+        }
+    }
 
     const handleJoin = () => {
         const meetId = id
@@ -70,6 +56,15 @@ const Meet = () => {
         fromRef.current.value = ''
         toRef.current.value = ''
     }
+
+    useEffect(() => {
+        console.log('Render in MEET')
+        getDocument('meets', id)
+
+        return () => {
+            console.log('Render out MEET')
+        }
+    }, [])
 
     return (
         <div>

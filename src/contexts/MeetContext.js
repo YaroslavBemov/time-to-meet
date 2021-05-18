@@ -1,7 +1,9 @@
 import {createContext, useContext, useEffect, useState} from 'react'
+import {useHistory} from 'react-router-dom'
 
 import {db} from '../adapters/firebase'
-import firebase from "firebase";
+import firebase from 'firebase'
+import {MEETS} from '../constants/routes'
 
 const MeetContext = createContext()
 
@@ -12,6 +14,7 @@ export function useMeet() {
 export function MeetProvider({children}) {
     const [collection, setCollection] = useState([])
     const [document, setDocument] = useState([])
+    const history = useHistory()
 
     // TODO unsubscribe
     const getCollection = (title) => {
@@ -46,6 +49,18 @@ export function MeetProvider({children}) {
             })
     }
 
+    const deleteDocument = (collectionTitle, documentId) => {
+        db.collection(collectionTitle)
+            .doc(documentId)
+            .delete()
+            .then(() => {
+                console.log("Document successfully deleted!")
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
+    }
+
     const joinToMeet = (meetId, uid, name, from, to) => {
         db.collection('meets')
             .doc(meetId)
@@ -71,7 +86,7 @@ export function MeetProvider({children}) {
         return () => {
             console.log('Render out MeetsContext')
         }
-    })
+    }, [])
 
     const value = {
         collection,
@@ -79,6 +94,7 @@ export function MeetProvider({children}) {
         getCollection,
         getDocument,
         addDocument,
+        deleteDocument,
         joinToMeet
     }
 

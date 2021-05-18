@@ -3,10 +3,11 @@ import {Link} from 'react-router-dom'
 
 import {useAuth} from '../contexts/AuthContext'
 import {useMeet} from '../contexts/MeetContext'
+import {MEETS} from '../constants/routes'
 
 
 const Meets = () => {
-    const {collection, getCollection, addDocument} = useMeet()
+    const {collection, getCollection, addDocument, deleteDocument} = useMeet()
 
     const {currentUser} = useAuth()
 
@@ -27,6 +28,10 @@ const Meets = () => {
         toRef.current.value = ''
     }
 
+    const handleDelete = (id) => {
+        deleteDocument('meets', id)
+    }
+
     useEffect(() => {
         console.log('Render in Meets')
         getCollection('meets')
@@ -39,7 +44,7 @@ const Meets = () => {
             <h1>Meets</h1>
             <ul>
                 {collection && collection.map(item => (
-                    <Link to={'/meets/' + item.id} key={item.id}><li><b>{item.name}</b> {item.date}</li></Link>
+                    <li key={item.id}><Link to={`${MEETS}/${item.id}`}><b>{item.name}</b> {item.date}</Link><button onClick={() => handleDelete(item.id)}>X</button></li>
                 ))}
             </ul>
             <label>When:
