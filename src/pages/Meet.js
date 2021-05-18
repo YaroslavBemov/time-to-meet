@@ -13,6 +13,7 @@ const Meet = () => {
     const fromRef = useRef()
     const toRef = useRef()
     const totalRef = useRef({})
+    // const isJoinDisable = useRef(false)
 
     const {document, getDocument, joinToMeet, deleteDocument} = useMeet()
     const members = document.members
@@ -33,10 +34,13 @@ const Meet = () => {
             result = compareRange(result, members[i])
         }
 
+        //TODO don't work!!!
         totalRef.current = {
             from: result.from,
             to: result.to
         }
+        //TODO bad way, bug, not updates
+        // isJoinDisable.current = !!members.find(member => member.uid === document.uid)
     } else {
         totalRef.current = {
             from: document.from,
@@ -97,6 +101,7 @@ const Meet = () => {
                 />
             </label><br/>
             <button
+                // disabled={isJoinDisable.current}
                 onClick={handleJoin}
             >Join
             </button>

@@ -1,9 +1,7 @@
 import {createContext, useContext, useEffect, useState} from 'react'
-import {useHistory} from 'react-router-dom'
 
 import {db} from '../adapters/firebase'
 import firebase from 'firebase'
-import {MEETS} from '../constants/routes'
 
 const MeetContext = createContext()
 
@@ -14,11 +12,11 @@ export function useMeet() {
 export function MeetProvider({children}) {
     const [collection, setCollection] = useState([])
     const [document, setDocument] = useState([])
-    const history = useHistory()
+    let unsubscribeCollection, unsubscribeDocument
 
     // TODO unsubscribe
     const getCollection = (title) => {
-        db.collection(title)
+        unsubscribeCollection = db.collection(title)
             .onSnapshot(snapshot => {
                 let list = snapshot.docs.map(doc => ({
                     id: doc.id,
@@ -30,7 +28,7 @@ export function MeetProvider({children}) {
 
     // TODO unsubscribe
     const getDocument = (collectionTitle, documentId) => {
-        db.collection(collectionTitle)
+        unsubscribeDocument = db.collection(collectionTitle)
             .doc(documentId)
             .onSnapshot(doc => {
                 const data = doc.data()
@@ -84,6 +82,8 @@ export function MeetProvider({children}) {
         console.log('Render in MeetsContext')
 
         return () => {
+            unsubscribeCollection()
+            unsubscribeDocument()
             console.log('Render out MeetsContext')
         }
     }, [])
