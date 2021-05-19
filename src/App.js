@@ -8,13 +8,13 @@ import SignUp from './pages/SignUp'
 import SignIn from './pages/SignIn'
 import ResetPassword from './pages/ResetPassword'
 
+// Components
+import NavBar from './components/NavBar'
+
 // Routes
 import * as ROUTE from './constants/routes'
 import PrivateRoute from './components/PrivateRoute'
 
-import NavBar from './components/NavBar'
-
-import {MeetProvider} from './contexts/MeetContext'
 
 export default function App() {
     return (
@@ -22,10 +22,8 @@ export default function App() {
             <NavBar/>
             <Switch>
                 <Route path={ROUTE.LANDING} exact component={Landing}/>
-                <MeetProvider>
-                    <PrivateRoute path={ROUTE.MEETS} exact component={Meets}/>
-                    <PrivateRoute path={ROUTE.MEET} component={Meet}/>
-                </MeetProvider>
+                <PrivateRoute path={ROUTE.MEETS} exact component={Meets}/>
+                <PrivateRoute path={ROUTE.MEET} component={Meet}/>
                 <Route path={ROUTE.SIGNUP} component={SignUp}/>
                 <Route path={ROUTE.SIGNIN} component={SignIn}/>
                 <Route path={ROUTE.RESET_PASSWORD} component={ResetPassword}/>

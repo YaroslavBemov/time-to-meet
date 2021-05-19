@@ -2,92 +2,102 @@ import React, {useEffect, useRef, useState} from 'react'
 import {useParams, useHistory} from 'react-router-dom'
 
 import {useAuth} from '../contexts/AuthContext'
-import {useMeet} from '../contexts/MeetContext'
-
+import {db} from '../adapters/firebase'
+import firebase from 'firebase'
+import {MEETS} from '../constants/routes'
 import compareRange from '../utils/compareRange'
 
 const Meet = () => {
-    console.log('MEEEEEEEEEEEET')
     const {id} = useParams()
     const {currentUser} = useAuth()
+
+    const [meet, setMeet] = useState([])
 
     const fromRef = useRef()
     const toRef = useRef()
 
-    const {document, getDocument, joinToMeet, deleteDocument} = useMeet()
+    const history = useHistory()
 
-    const handleJoin = () => {
-        const meetId = id
+    let total = {}
+    let members = []
+    let isJoinDisable = false
+    let isDeleteDisable = true
+
+    if (meet) {
+        total = {
+            from: meet.from,
+            to: meet.to
+        }
+
+        if (+total.from > +total.to) {
+            [total.from, total.to] = [total.to, total.from]
+        }
+
+        isDeleteDisable = meet.uid !== currentUser.uid
+
+        if (meet.members) {
+            members = meet.members
+            const count = members.length
+
+            for (let i = 0; i < count; i++) {
+                total = compareRange(total, members[i])
+            }
+
+            isJoinDisable = !!members.find(member => member.uid === meet.uid)
+        }
+    }
+
+    const updateMeet = () => {
         const uid = currentUser.uid
         const name = currentUser.displayName
         const from = fromRef.current.value
         const to = toRef.current.value
 
-        joinToMeet(meetId, uid, name, from, to)
+        db.collection('meets')
+            .doc(id)
+            .update({
+                members: firebase.firestore.FieldValue.arrayUnion({
+                    uid: uid,
+                    name: name,
+                    from: from,
+                    to: to
+                })
+            })
+            .then(() => {
+                console.log("Document successfully updated!")
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
 
         fromRef.current.value = ''
         toRef.current.value = ''
     }
 
-    const didMount = React.useRef(false)
-
-    let members, total, isJoinDisable
-
-    let result = {
-        from: document.from,
-        to: document.to
-    }
-
-    if (+result.from > +result.to) {
-        [result.from, result.to] = [result.to, result.from]
-    }
-    console.log(`result.from = ${result.from}`)
-    console.log(`result.to = ${result.to}`)
-
-    if (document.members) {
-        members = document.members
-
-        console.log(document.members)
-        console.log(members)
-
-        const count = members.length
-        console.log(`count = ${count}`)
-
-        for (let i = 0; i < count; i++) {
-            result = compareRange(result, members[i])
-        }
-
-        //TODO bad way, bug, not updates
-        isJoinDisable = !!members.find(member => member.uid === document.uid)
-        console.log(`isJoinDisable = ${isJoinDisable}`)
-    } else {
-        isJoinDisable = false
-    }
-
-    //TODO don't work!!!
-    total = {
-        from: result.from,
-        to: result.to
+    const deleteMeet = () => {
+        db.collection('meets')
+            .doc(id)
+            .delete()
+            .then(() => {
+                console.log("Document successfully deleted!")
+                history.push(MEETS)
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
     }
 
     useEffect(() => {
-        console.log('Render in MEET')
-        if (didMount.current) {
-            console.log('On update')
-            console.log(document)
+        const unsubscribeMeet = db
+            .collection('meets')
+            .doc(id)
+            .onSnapshot(doc => {
+                const data = doc.data()
+                setMeet(data)
+            })
 
-
-
-        } else {
-            console.log('on first')
-
-            getDocument('meets', id)
-
-            didMount.current = true
-        }
-        getDocument('meets', id)
         return () => {
-            console.log('Render out MEET')
+            unsubscribeMeet()
         }
     }, [])
 
@@ -95,9 +105,9 @@ const Meet = () => {
         <div>
             <div>
                 <h1>ID={id}</h1>
-                <p>Who: <b>{document && document.name}</b></p>
-                <p>When: <b>{document && document.date}</b></p>
-                <p>From: <b>{document && document.from}</b> To: <b>{document && document.to}</b></p>
+                <p>Who: <b>{meet && meet.name}</b></p>
+                <p>When: <b>{meet && meet.date}</b></p>
+                <p>From: <b>{meet && meet.from}</b> To: <b>{meet && meet.to}</b></p>
             </div>
             <div>
                 <h3>Members</h3>
@@ -123,8 +133,13 @@ const Meet = () => {
             </label><br/>
             <button
                 disabled={isJoinDisable}
-                onClick={handleJoin}
+                onClick={updateMeet}
             >Join
+            </button>
+            <button
+                disabled={isDeleteDisable}
+                onClick={deleteMeet}
+            >Delete
             </button>
         </div>
 
