@@ -3,7 +3,9 @@ import {useParams, useHistory} from 'react-router-dom'
 
 import {useAuth} from '../contexts/AuthContext'
 import {db} from '../adapters/firebase'
-import firebase from 'firebase'
+//V9
+// import {doc, updateDoc} from 'firebase/firestore'
+import firebase from 'firebase/app'
 import {MEETS} from '../constants/routes'
 import compareRange from '../utils/compareRange'
 
@@ -47,11 +49,23 @@ const Meet = () => {
         }
     }
 
-    const updateMeet = () => {
+    const joinMeet = () => {
         const uid = currentUser.uid
         const name = currentUser.displayName
         const from = fromRef.current.value
         const to = toRef.current.value
+
+        //V9
+        // const meetRef = doc(db, 'meets', id);
+        //
+        // await updateDoc(meetRef, {
+        //     members: arrayUnion({
+        //         uid: uid,
+        //         name: name,
+        //         from: from,
+        //         to: to
+        //     })
+        // })
 
         db.collection('meets')
             .doc(id)
@@ -99,7 +113,7 @@ const Meet = () => {
         return () => {
             unsubscribeMeet()
         }
-    }, [])
+    }, [id])
 
     return (
         <div>
@@ -133,7 +147,7 @@ const Meet = () => {
             </label><br/>
             <button
                 disabled={isJoinDisable}
-                onClick={updateMeet}
+                onClick={joinMeet}
             >Join
             </button>
             <button

@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import {AuthProvider} from './contexts/AuthContext'
-import {MeetProvider} from './contexts/MeetContext'
 
 ReactDOM.render(
     <React.StrictMode>
