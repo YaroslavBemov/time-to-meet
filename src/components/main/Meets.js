@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react'
 import {Link} from 'react-router-dom'
 
-import {useAuth} from '../contexts/AuthContext'
-import {db} from '../adapters/firebase'
-import {MEETS} from '../constants/routes'
+import {useAuth} from '../../contexts/AuthContext'
+import {db} from '../../adapters/firebase'
+import {MEETS} from '../../constants/routes'
 
 
 const Meets = () => {
@@ -51,7 +51,7 @@ const Meets = () => {
     }, [])
 
     return (
-        <div>
+        <section className='meets'>
             <h1>Meets</h1>
             <ul>
                 {meets && meets.map(item => (
@@ -80,7 +80,7 @@ const Meets = () => {
                 />
             </label><br/>
             <button onClick={addMeet}>Add Meet</button>
-        </div>
+        </section>
     )
 }
 

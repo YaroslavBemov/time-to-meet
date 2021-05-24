@@ -1,13 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react'
 import {useParams, useHistory} from 'react-router-dom'
 
-import {useAuth} from '../contexts/AuthContext'
-import {db} from '../adapters/firebase'
+import {useAuth} from '../../contexts/AuthContext'
+import {db} from '../../adapters/firebase'
 //V9
 // import {doc, updateDoc} from 'firebase/firestore'
 import firebase from 'firebase/app'
-import {MEETS} from '../constants/routes'
-import compareRange from '../utils/compareRange'
+import {MEETS} from '../../constants/routes'
+import compareRange from '../../utils/compareRange'
 
 const Meet = () => {
     const {id} = useParams()
@@ -116,7 +116,7 @@ const Meet = () => {
     }, [id])
 
     return (
-        <div>
+        <section className='meet'>
             <div>
                 <h1>ID={id}</h1>
                 <p>Who: <b>{meet && meet.name}</b></p>
@@ -155,7 +155,7 @@ const Meet = () => {
                 onClick={deleteMeet}
             >Delete
             </button>
-        </div>
+        </section>
 
     )
 }

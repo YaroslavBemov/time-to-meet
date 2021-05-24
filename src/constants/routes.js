@@ -1,4 +1,6 @@
 export const LANDING = '/'
+export const MAIN = '/main'
+export const PARTY = '/party'
 export const MEETS = '/meets'
 export const MEET = '/meets/:id'
 export const SIGNUP = '/signup'
