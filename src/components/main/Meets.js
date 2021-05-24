@@ -61,25 +61,25 @@ const Meets = () => {
                     </li>
                 ))}
             </ul>
-            <label>When:
-                <input
-                    type='date'
-                    ref={whenRef}
-                />
-            </label><br/>
-            <label>From:
-                <input
-                    type='text'
-                    ref={fromRef}
-                />
-            </label><br/>
-            <label>To:
-                <input
-                    type='text'
-                    ref={toRef}
-                />
-            </label><br/>
-            <button onClick={addMeet}>Add Meet</button>
+            {/*<label>When:*/}
+            {/*    <input*/}
+            {/*        type='date'*/}
+            {/*        ref={whenRef}*/}
+            {/*    />*/}
+            {/*</label><br/>*/}
+            {/*<label>From:*/}
+            {/*    <input*/}
+            {/*        type='text'*/}
+            {/*        ref={fromRef}*/}
+            {/*    />*/}
+            {/*</label><br/>*/}
+            {/*<label>To:*/}
+            {/*    <input*/}
+            {/*        type='text'*/}
+            {/*        ref={toRef}*/}
+            {/*    />*/}
+            {/*</label><br/>*/}
+            {/*<button onClick={addMeet}>Add Meet</button>*/}
         </section>
     )
 }

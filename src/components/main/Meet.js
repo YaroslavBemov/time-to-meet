@@ -8,6 +8,8 @@ import {db} from '../../adapters/firebase'
 import firebase from 'firebase/app'
 import {MEETS} from '../../constants/routes'
 import compareRange from '../../utils/compareRange'
+import Meets from './Meets'
+import Party from './Party'
 
 const Meet = () => {
     const {id} = useParams()
@@ -78,7 +80,7 @@ const Meet = () => {
                 })
             })
             .then(() => {
-                console.log("Document successfully updated!")
+                console.log('Document successfully updated!')
             })
             .catch(error => {
                 console.log(error.message)
@@ -93,7 +95,7 @@ const Meet = () => {
             .doc(id)
             .delete()
             .then(() => {
-                console.log("Document successfully deleted!")
+                console.log('Document successfully deleted!')
                 history.push(MEETS)
             })
             .catch(error => {
@@ -116,47 +118,51 @@ const Meet = () => {
     }, [id])
 
     return (
-        <section className='meet'>
-            <div>
-                <h1>ID={id}</h1>
-                <p>Who: <b>{meet && meet.name}</b></p>
-                <p>When: <b>{meet && meet.date}</b></p>
-                <p>From: <b>{meet && meet.from}</b> To: <b>{meet && meet.to}</b></p>
-            </div>
-            <div>
-                <h3>Members</h3>
-                <ul>
-                    {members && members.map(item => (
-                        <li key={item.uid}>Name: <b>{item.name}</b> from: <b>{item.from}</b> to: <b>{item.to}</b></li>
-                    ))}
-                </ul>
-                <h3>Total</h3>
-                <p>From: <b>{total && total.from}</b> To: <b>{total && total.to}</b></p>
-            </div>
-            <label>From:
-                <input
-                    type='text'
-                    ref={fromRef}
-                />
-            </label><br/>
-            <label>To:
-                <input
-                    type='text'
-                    ref={toRef}
-                />
-            </label><br/>
-            <button
-                disabled={isJoinDisable}
-                onClick={joinMeet}
-            >Join
-            </button>
-            <button
-                disabled={isDeleteDisable}
-                onClick={deleteMeet}
-            >Delete
-            </button>
-        </section>
-
+        <>
+            <Party/>
+            <Meets/>
+            <section className="meet">
+                <div>
+                    <h1>ID={id}</h1>
+                    <p>Who: <b>{meet && meet.name}</b></p>
+                    <p>When: <b>{meet && meet.date}</b></p>
+                    <p>From: <b>{meet && meet.from}</b> To: <b>{meet && meet.to}</b></p>
+                </div>
+                <div>
+                    <h3>Members</h3>
+                    <ul>
+                        {members && members.map(item => (
+                            <li key={item.uid}>Name: <b>{item.name}</b> from: <b>{item.from}</b> to: <b>{item.to}</b>
+                            </li>
+                        ))}
+                    </ul>
+                    <h3>Total</h3>
+                    <p>From: <b>{total && total.from}</b> To: <b>{total && total.to}</b></p>
+                </div>
+                <label>From:
+                    <input
+                        type="text"
+                        ref={fromRef}
+                    />
+                </label><br/>
+                <label>To:
+                    <input
+                        type="text"
+                        ref={toRef}
+                    />
+                </label><br/>
+                <button
+                    disabled={isJoinDisable}
+                    onClick={joinMeet}
+                >Join
+                </button>
+                <button
+                    disabled={isDeleteDisable}
+                    onClick={deleteMeet}
+                >Delete
+                </button>
+            </section>
+        </>
     )
 }
 

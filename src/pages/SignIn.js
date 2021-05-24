@@ -36,7 +36,7 @@ const SignIn = () => {
     }
 
     return (
-        <div>
+        <main>
             <h1>Sign In</h1>
             <form onSubmit={event => handleSignIn(event)}>
                 {error}<br/>
@@ -65,7 +65,7 @@ const SignIn = () => {
                     Sign In
                 </button>
             </form>
-        </div>
+        </main>
     )
 }
 

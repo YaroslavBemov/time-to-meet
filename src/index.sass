@@ -1,31 +1,59 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap')
 
 $primary-white: rgba(255, 255, 255, 1)
+$primary-background: linear-gradient(296.82deg, #363636 0%, #424242 100%)
+$box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 0.1), inset 16px 10px 30px rgba(0, 0, 0, 0.4)
+$border-radius: 10px
 
-body
+@mixin inner-block ()
+    border-radius: $border-radius
+    background: $primary-background
+    box-shadow: $box-shadow
+
+*
     margin: 0
     padding: 0
+    box-sizing: border-box
+
+body
     font-family: 'Roboto', sans-serif
     color: $primary-white
 
 #root
     height: 100vh
+    padding: 20px calc(50% - 590px) 60px
     display: grid
     grid-template-columns: repeat(12, 1fr)
-    grid-template-rows: 64px 1fr
-    background: linear-gradient(296.82deg, #363636 0%, #424242 100%)
+    grid-template-rows: 84px 1fr
+    background: $primary-background
 
     header
+        padding: 12px 50px
+        margin-bottom: 20px
         grid-area: 1 / 1 / 2 / 13
+        display: flex
+        align-items: center
+        @include inner-block
+
+        nav
+            display: flex
+            align-items: center
+            a
+                margin: 0 12px
+                color: $primary-white
+
 
     main
         grid-area: 2 / 1 / 3 / 13
 
     .party
         grid-area: 2 / 1 / 3 / 4
+        @include inner-block
 
     .meets
         grid-area: 2 / 4 / 3 / 7
+        a
+            color: $primary-white
 
     .meet
         grid-area: 2 / 7 / 3 / 13

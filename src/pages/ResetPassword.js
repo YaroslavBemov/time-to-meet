@@ -30,7 +30,7 @@ const ResetPassword = () => {
     }
 
     return (
-        <div>
+        <main>
             <h1>Reset Password</h1>
             <form onSubmit={event => handleResetPassword(event)}>
                 {error}<br/>
@@ -45,7 +45,7 @@ const ResetPassword = () => {
                 disabled={loading}
                 >Reset Password</button>
             </form>
-        </div>
+        </main>
     )
 }
 
