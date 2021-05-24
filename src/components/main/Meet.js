@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {memo, useEffect, useRef, useState} from 'react'
 import {useParams, useHistory} from 'react-router-dom'
 
 import {useAuth} from '../../contexts/AuthContext'
@@ -11,7 +11,8 @@ import compareRange from '../../utils/compareRange'
 import Meets from './Meets'
 import Party from './Party'
 
-const Meet = () => {
+const Meet = memo(() => {
+    console.log('render Meet')
     const {id} = useParams()
     const {currentUser} = useAuth()
 
@@ -119,7 +120,6 @@ const Meet = () => {
 
     return (
         <>
-            <Party/>
             <Meets/>
             <section className="meet">
                 <div>
@@ -164,6 +164,6 @@ const Meet = () => {
             </section>
         </>
     )
-}
+})
 
 export default Meet

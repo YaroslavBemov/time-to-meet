@@ -1,18 +1,20 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {memo, useEffect, useRef, useState} from 'react'
 import {Link} from 'react-router-dom'
 
 import {useAuth} from '../../contexts/AuthContext'
 import {db} from '../../adapters/firebase'
 import {MEETS} from '../../constants/routes'
+import Party from './Party'
+import Meet from './Meet'
 
 
-const Meets = () => {
+const Meets = memo(() => {
+    console.log('render MEETS')
     const [meets, setMeets] = useState([])
     const whenRef = useRef()
     const fromRef = useRef()
     const toRef = useRef()
     const {currentUser} = useAuth()
-
 
     const addMeet = () => {
         const uid = currentUser.uid
@@ -24,7 +26,7 @@ const Meets = () => {
         db.collection('meets')
             .add({uid, name, date, from, to})
             .then(() => {
-                console.log("Document successfully created!")
+                console.log('Document successfully created!')
             })
             .catch(error => {
                 console.log(error.message)
@@ -51,37 +53,39 @@ const Meets = () => {
     }, [])
 
     return (
-        <section className='meets'>
-            <h1>Meets</h1>
-            <ul>
-                {meets && meets.map(item => (
-                    <li key={item.id}>
-                        <Link to={`${MEETS}/${item.id}`}>
-                            <b>{item.name}</b> {item.date}</Link>
-                    </li>
-                ))}
-            </ul>
-            {/*<label>When:*/}
-            {/*    <input*/}
-            {/*        type='date'*/}
-            {/*        ref={whenRef}*/}
-            {/*    />*/}
-            {/*</label><br/>*/}
-            {/*<label>From:*/}
-            {/*    <input*/}
-            {/*        type='text'*/}
-            {/*        ref={fromRef}*/}
-            {/*    />*/}
-            {/*</label><br/>*/}
-            {/*<label>To:*/}
-            {/*    <input*/}
-            {/*        type='text'*/}
-            {/*        ref={toRef}*/}
-            {/*    />*/}
-            {/*</label><br/>*/}
-            {/*<button onClick={addMeet}>Add Meet</button>*/}
-        </section>
+        <>
+            <section className="meets">
+                <h1>Meets</h1>
+                <ul>
+                    {meets && meets.map(item => (
+                        <li key={item.id}>
+                            <Link to={`${MEETS}/${item.id}`}>
+                                <b>{item.name}</b> {item.date}</Link>
+                        </li>
+                    ))}
+                </ul>
+                {/*<label>When:*/}
+                {/*    <input*/}
+                {/*        type='date'*/}
+                {/*        ref={whenRef}*/}
+                {/*    />*/}
+                {/*</label><br/>*/}
+                {/*<label>From:*/}
+                {/*    <input*/}
+                {/*        type='text'*/}
+                {/*        ref={fromRef}*/}
+                {/*    />*/}
+                {/*</label><br/>*/}
+                {/*<label>To:*/}
+                {/*    <input*/}
+                {/*        type='text'*/}
+                {/*        ref={toRef}*/}
+                {/*    />*/}
+                {/*</label><br/>*/}
+                {/*<button onClick={addMeet}>Add Meet</button>*/}
+            </section>
+        </>
     )
-}
+})
 
 export default Meets
