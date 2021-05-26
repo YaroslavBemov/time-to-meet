@@ -11,6 +11,7 @@ const AuthNav = () => {
     return (
         <>
             <Link to={ROUTE.LANDING}>Landing</Link><br/>
+            <Link to={ROUTE.PARTY}>Party</Link><br/>
             <Link to={ROUTE.MAIN}>Main</Link><br/>
             <Link to={ROUTE.MEETS}>Meets</Link><br/>
             <button onClick={() => signOut()}>Sign Out</button>
