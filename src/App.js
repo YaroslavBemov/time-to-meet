@@ -29,7 +29,7 @@ export default function App() {
                     <Route path={ROUTE.LANDING} exact component={Landing}/>
                     <PrivateRoute path={ROUTE.MAIN} exact component={Main}/>
                     <PrivateRoute path={ROUTE.PARTY} exact component={Party}/>
-                    <PrivateRoute path={ROUTE.MEETS} exact component={Meet}/>
+                    <PrivateRoute path={ROUTE.MEETS} exact component={Meets}/>
                     <PrivateRoute path={ROUTE.MEET} component={Meet}/>
                     <Route path={ROUTE.SIGNUP} component={SignUp}/>
                     <Route path={ROUTE.SIGNIN} component={SignIn}/>

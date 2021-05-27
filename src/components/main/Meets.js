@@ -1,5 +1,5 @@
 import React, {memo, useEffect, useRef, useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useParams} from 'react-router-dom'
 
 import {useAuth} from '../../contexts/AuthContext'
 import {db} from '../../adapters/firebase'
@@ -15,6 +15,7 @@ const Meets = memo(() => {
     const fromRef = useRef()
     const toRef = useRef()
     const {currentUser} = useAuth()
+    const {id} = useParams()
 
     const addMeet = () => {
         const uid = currentUser.uid
@@ -39,6 +40,7 @@ const Meets = memo(() => {
     useEffect(() => {
         const unsubscribeMeets = db
             .collection('meets')
+            .where('party', '==', id)
             .onSnapshot(snapshot => {
                 const list = snapshot.docs.map(doc => ({
                     id: doc.id,

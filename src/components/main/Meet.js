@@ -120,7 +120,6 @@ const Meet = memo(() => {
 
     return (
         <>
-            <Meets/>
             <section className="meet">
                 <div>
                     <h1>ID={id}</h1>
