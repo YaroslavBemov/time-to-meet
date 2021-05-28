@@ -1,14 +1,14 @@
 import React from 'react'
 import {Link, Switch, Route, useRouteMatch} from 'react-router-dom'
 import {PARTY} from '../constants/routes'
-import MeetTest from '../components/MeetTest'
+import MeetPage from './MeetPage'
 
-const MeetApp = () => {
+const MeetsPage = () => {
     const match = useRouteMatch()
 
     return (
         <div>
-            <h1>MEET APP</h1>
+            <h1>MEETS PAGE</h1>
             <ul>
                 <li>
                     <Link to={`${match.url}/meet1`}>Meet 1</Link>
@@ -25,7 +25,7 @@ const MeetApp = () => {
 
             <Switch>
                 <Route path={`${match.path}/:meet`}>
-                    <MeetTest/>
+                    <MeetPage/>
                 </Route>
                 {/*<Route path={`${match.path}/meet2`}>*/}
                 {/*    <MeetTest/>*/}
@@ -42,4 +42,4 @@ const MeetApp = () => {
     )
 }
 
-export default MeetApp
+export default MeetsPage
