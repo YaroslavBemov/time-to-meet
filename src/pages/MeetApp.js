@@ -1,27 +1,41 @@
 import React from 'react'
-import {Link, Switch, Route} from 'react-router-dom'
+import {Link, Switch, Route, useRouteMatch} from 'react-router-dom'
 import {PARTY} from '../constants/routes'
-import Party from '../components/Party'
+import MeetTest from '../components/MeetTest'
 
 const MeetApp = () => {
+    const match = useRouteMatch()
+
     return (
         <div>
-            <h1>APP</h1>
+            <h1>MEET APP</h1>
             <ul>
                 <li>
-                    <Link to={'/team1'}>Team 1</Link>
+                    <Link to={`${match.url}/meet1`}>Meet 1</Link>
                 </li>
                 <li>
-                    <Link to={'/team2'}>Team 2</Link>
+                    <Link to={`${match.url}/meet2`}>Meet 2</Link>
                 </li>
                 <li>
-                    <Link to={'/team3'}>Team 3</Link>
+                    <Link to={`${match.url}/meet3`}>Meet 3</Link>
                 </li>
             </ul>
+
+            <hr/>
+
             <Switch>
-                <Route path={PARTY}>
-                    <Party/>
+                <Route path={`${match.path}/:meet`}>
+                    <MeetTest/>
                 </Route>
+                {/*<Route path={`${match.path}/meet2`}>*/}
+                {/*    <MeetTest/>*/}
+                {/*</Route>*/}
+                {/*<Route path={`${match.path}/meet3`}>*/}
+                {/*    <MeetTest/>*/}
+                {/*</Route>*/}
+                {/*<Route exact path={`${match.path}`}>*/}
+                {/*    <h2>Summary</h2>*/}
+                {/*</Route>*/}
             </Switch>
         </div>
 
