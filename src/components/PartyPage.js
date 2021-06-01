@@ -32,11 +32,13 @@ const PartyPage = () => {
         <div>
             <h1>PARTY PAGE</h1>
             <ul>
-                {party && party.map(item => (
-                    <li key={item.id}>
-                        <Link to={`${match.url}/${item.id}`}>{item.title}</Link>
-                    </li>
-                ))}
+                {!party
+                    ? null
+                    : party.map(item => (
+                        <li key={item.id}>
+                            <Link to={`${match.url}/${item.id}`}>{item.title}</Link>
+                        </li>
+                    ))}
             </ul>
 
             <hr/>
