@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {Link, Switch, Route, useRouteMatch} from 'react-router-dom'
 import MeetPage from './MeetPage'
 import {db} from '../adapters/firebase'
+import Meet from '../pages/Meet'
 
 const MeetsPage = () => {
     const [meets, setMeets] = useState([])
@@ -38,7 +39,7 @@ const MeetsPage = () => {
 
             <Switch>
                 <Route path={`${match.path}/:meet`}>
-                    <MeetPage/>
+                    <Meet/>
                 </Route>
             </Switch>
         </div>

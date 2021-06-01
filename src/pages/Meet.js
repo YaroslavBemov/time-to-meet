@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react'
-import {useParams, useHistory} from 'react-router-dom'
+import {useParams, useHistory, useRouteMatch} from 'react-router-dom'
 
 import {useAuth} from '../contexts/AuthContext'
 import {db} from '../adapters/firebase'
@@ -10,7 +10,9 @@ import {MEETS} from '../constants/routes'
 import compareRange from '../utils/compareRange'
 
 const Meet = () => {
-    const {id} = useParams()
+    // const {id} = useParams()
+    const match = useRouteMatch()
+    const id = match.params.meet
     const {currentUser} = useAuth()
 
     const [meet, setMeet] = useState([])
