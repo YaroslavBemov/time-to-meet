@@ -1,5 +1,5 @@
 import React from 'react'
-import {useRouteMatch, Switch, Route, Link} from 'react-router-dom'
+import {useRouteMatch} from 'react-router-dom'
 
 const MeetPage = () => {
     const match = useRouteMatch()

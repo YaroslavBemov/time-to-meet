@@ -1,25 +1,42 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {useRouteMatch, Switch, Route, Link} from 'react-router-dom'
-import EventList from "./EventList";
-import Summary from "./Summary";
-import MeetsPage from "./MeetsPage";
+import MeetsPage from './MeetsPage'
+import {db} from '../adapters/firebase'
+import {useAuth} from '../contexts/AuthContext'
 
 const PartyPage = () => {
-    const match = useRouteMatch();
+    const [party, setParty] = useState([])
+    const match = useRouteMatch()
+    const {currentUser} = useAuth()
+
+    const id = currentUser.uid
+
+    useEffect(() => {
+        const unsubParty = db
+            .collection('party')
+            .where('uids', 'array-contains', id)
+            .onSnapshot(snapshot => {
+                const list = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    title: doc.data().title
+                }))
+                setParty(list)
+            })
+
+        return () => {
+            unsubParty()
+        }
+    }, [])
 
     return (
         <div>
             <h1>PARTY PAGE</h1>
             <ul>
-                {/*<li>*/}
-                {/*    <Link to={`${match.url}`}>Summary</Link>*/}
-                {/*</li>*/}
-                <li>
-                    <Link to={`${match.url}/party1`}>Party 1</Link>
-                </li>
-                <li>
-                    <Link to={`${match.url}/party2`}>Party 2</Link>
-                </li>
+                {party && party.map(item => (
+                    <li key={item.id}>
+                        <Link to={`${match.url}/${item.id}`}>{item.title}</Link>
+                    </li>
+                ))}
             </ul>
 
             <hr/>
@@ -28,15 +45,9 @@ const PartyPage = () => {
                 <Route path={`${match.path}/:party`}>
                     <MeetsPage/>
                 </Route>
-                {/*<Route path={`${match.path}/events2`}>*/}
-                {/*    <EventList/>*/}
-                {/*</Route>*/}
-                {/*<Route path={match.path}>*/}
-                {/*    <Summary/>*/}
-                {/*</Route>*/}
             </Switch>
         </div>
-    );
-};
+    )
+}
 
 export default PartyPage
