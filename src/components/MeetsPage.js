@@ -4,44 +4,54 @@ import MeetPage from './MeetPage'
 import {db} from '../adapters/firebase'
 import Meet from '../pages/Meet'
 
-const MeetsPage = () => {
+const MeetsPage = ({currentParty}) => {
     const [meets, setMeets] = useState([])
-    const match = useRouteMatch()
-    const party = match.params.party
+    const [currentMeet, setCurrentMeet] = useState('')
+    // const match = useRouteMatch()
+    // const party = match.params.party
 
     useEffect(() => {
         const unsubMeets = db
             .collection('meets')
-            .where('party', '==', party)
+            .where('party', '==', currentParty)
             .onSnapshot(snapshot => {
                 const list = snapshot.docs.map(doc => ({
                     id: doc.id,
                     ...doc.data()
                 }))
+                console.log(list)
                 setMeets(list)
+                setCurrentMeet(list[0]?.id)
             })
-    }, [party])
+    }, [currentParty])
 
     return (
         <div>
             <h1>MEETS PAGE</h1>
-            <ul>
-                {!meets
-                    ? null
-                    : meets.map(item => (
-                        <li key={item.id}>
-                            <Link to={`${match.url}/${item.id}`}>{item.id}</Link>
-                        </li>
-                    ))}
-            </ul>
+            <form>
+                <fieldset>
+                    {!meets
+                        ? null
+                        : meets.map(item => (
+                            <label
+                                key={item.id}
+                            >
+                                <input
+                                    type="radio"
+                                />
+                                {item.id}
+                            </label>
+                        ))}
+                </fieldset>
+            </form>
 
             <hr/>
-
-            <Switch>
-                <Route path={`${match.path}/:meet`}>
-                    <Meet/>
-                </Route>
-            </Switch>
+            {/*<Meet currentMeet={currentMeet}/>*/}
+            {/*<Switch>*/}
+            {/*    <Route path={`${match.path}/:meet`}>*/}
+            {/*        <Meet/>*/}
+            {/*    </Route>*/}
+            {/*</Switch>*/}
         </div>
 
     )

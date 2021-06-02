@@ -9,10 +9,10 @@ import firebase from 'firebase/app'
 import {MEETS} from '../constants/routes'
 import compareRange from '../utils/compareRange'
 
-const Meet = () => {
+const Meet = ({currentMeet}) => {
     // const {id} = useParams()
-    const match = useRouteMatch()
-    const id = match.params.meet
+    // const match = useRouteMatch()
+    // const id = match.params.meet
     const {currentUser} = useAuth()
 
     const [meet, setMeet] = useState([])
@@ -70,7 +70,7 @@ const Meet = () => {
         // })
 
         db.collection('meets')
-            .doc(id)
+            .doc(currentMeet)
             .update({
                 members: firebase.firestore.FieldValue.arrayUnion({
                     uid: uid,
@@ -92,7 +92,7 @@ const Meet = () => {
 
     const deleteMeet = () => {
         db.collection('meets')
-            .doc(id)
+            .doc(currentMeet)
             .delete()
             .then(() => {
                 console.log("Document successfully deleted!")
@@ -106,7 +106,7 @@ const Meet = () => {
     useEffect(() => {
         const unsubscribeMeet = db
             .collection('meets')
-            .doc(id)
+            .doc(currentMeet)
             .onSnapshot(doc => {
                 const data = doc.data()
                 setMeet(data)
@@ -115,12 +115,12 @@ const Meet = () => {
         return () => {
             unsubscribeMeet()
         }
-    }, [id])
+    }, [currentMeet])
 
     return (
         <div>
             <div>
-                <h1>ID={id}</h1>
+                <h1>ID={currentMeet}</h1>
                 <p>Who: <b>{meet && meet.name}</b></p>
                 <p>When: <b>{meet && meet.date}</b></p>
                 <p>From: <b>{meet && meet.from}</b> To: <b>{meet && meet.to}</b></p>
