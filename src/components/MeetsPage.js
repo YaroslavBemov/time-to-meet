@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {Link, Switch, Route, useRouteMatch} from 'react-router-dom'
 import MeetPage from './MeetPage'
 import {db} from '../adapters/firebase'
-import Meet from '../pages/Meet'
+import Meet from './Meet'
 
 const MeetsPage = ({currentParty}) => {
     const [meets, setMeets] = useState([])
@@ -19,7 +19,6 @@ const MeetsPage = ({currentParty}) => {
                     id: doc.id,
                     ...doc.data()
                 }))
-                console.log(list)
                 setMeets(list)
                 setCurrentMeet(list[0]?.id)
             })
@@ -29,20 +28,18 @@ const MeetsPage = ({currentParty}) => {
         <div>
             <h1>MEETS PAGE</h1>
             <form>
-                <fieldset>
-                    {!meets
-                        ? null
-                        : meets.map(item => (
-                            <label
-                                key={item.id}
-                            >
-                                <input
-                                    type="radio"
-                                />
-                                {item.id}
-                            </label>
-                        ))}
-                </fieldset>
+                {!meets
+                    ? null
+                    : meets.map(item => (
+                        <label
+                            key={item.id}
+                        >
+                            <input
+                                type="radio"
+                            />
+                            {item.id}
+                        </label>
+                    ))}
             </form>
 
             <hr/>

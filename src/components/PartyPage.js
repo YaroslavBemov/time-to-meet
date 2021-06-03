@@ -7,11 +7,14 @@ import {useAuth} from '../contexts/AuthContext'
 const PartyPage = () => {
     const [party, setParty] = useState([])
     const [currentParty, setCurrentParty] = useState('')
-    // const match = useRouteMatch()
     const {currentUser} = useAuth()
-    // const history = useHistory()
 
     const id = currentUser.uid
+
+    const handleChange = e => {
+        const {value} = e.target
+        setCurrentParty(value)
+    }
 
     useEffect(() => {
         const unsubParty = db
@@ -22,6 +25,7 @@ const PartyPage = () => {
                     id: doc.id,
                     title: doc.data().title
                 }))
+                console.log(list)
                 setParty(list)
                 setCurrentParty(list[0].id)
             })
@@ -34,22 +38,25 @@ const PartyPage = () => {
     return (
         <div>
             <h1>PARTY PAGE</h1>
-            <form>
-                <fieldset>
-                    {!party
-                        ? null
-                        : party.map(item => (
-                            <label
-                                key={item.id}
-                            >
-                                <input
-                                    type="radio"
-                                />
-                                {item.title}
-                            </label>
-                        ))}
-                </fieldset>
-            </form>
+            <div>
+                {!party
+                    ? null
+                    : party.map(item => (
+                        <label
+                            key={item.id}
+                        >
+                            <input
+                                type="radio"
+                                id={item.title}
+                                name='party'
+                                value={item.id}
+                                checked={currentParty === item.id}
+                                onChange={handleChange}
+                            />
+                            {item.title}
+                        </label>
+                    ))}
+            </div>
 
             <hr/>
 
