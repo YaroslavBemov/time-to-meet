@@ -10,9 +10,6 @@ import {MEETS} from '../constants/routes'
 import compareRange from '../utils/compareRange'
 
 const Meet = ({currentMeet}) => {
-    // const {id} = useParams()
-    // const match = useRouteMatch()
-    // const id = match.params.meet
     const {currentUser} = useAuth()
 
     const [meet, setMeet] = useState([])

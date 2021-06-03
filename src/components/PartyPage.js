@@ -25,8 +25,8 @@ const PartyPage = () => {
                     id: doc.id,
                     title: doc.data().title
                 }))
-                console.log(list)
                 setParty(list)
+                // list[0]?.id
                 setCurrentParty(list[0].id)
             })
 

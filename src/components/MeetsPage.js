@@ -7,8 +7,11 @@ import Meet from './Meet'
 const MeetsPage = ({currentParty}) => {
     const [meets, setMeets] = useState([])
     const [currentMeet, setCurrentMeet] = useState('')
-    // const match = useRouteMatch()
-    // const party = match.params.party
+
+    const handleChange = e => {
+        const {value} = e.target
+        setCurrentMeet(value)
+    }
 
     useEffect(() => {
         const unsubMeets = db
@@ -36,6 +39,11 @@ const MeetsPage = ({currentParty}) => {
                         >
                             <input
                                 type="radio"
+                                id={item.title}
+                                name='meet'
+                                value={item.id}
+                                checked={currentMeet === item.id}
+                                onChange={handleChange}
                             />
                             {item.id}
                         </label>
@@ -43,12 +51,8 @@ const MeetsPage = ({currentParty}) => {
             </form>
 
             <hr/>
-            {/*<Meet currentMeet={currentMeet}/>*/}
-            {/*<Switch>*/}
-            {/*    <Route path={`${match.path}/:meet`}>*/}
-            {/*        <Meet/>*/}
-            {/*    </Route>*/}
-            {/*</Switch>*/}
+
+            <Meet currentMeet={currentMeet}/>
         </div>
 
     )
