@@ -47,7 +47,7 @@ const Party = () => {
                             <input
                                 type="radio"
                                 id={item.title}
-                                name='party'
+                                name="party"
                                 value={item.id}
                                 checked={currentParty === item.id}
                                 onChange={handleChange}

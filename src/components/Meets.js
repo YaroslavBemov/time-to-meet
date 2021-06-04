@@ -12,19 +12,23 @@ const Meets = ({currentParty}) => {
     }
 
     useEffect(() => {
-        const unsubMeets = db
-            .collection('meets')
-            .where('party', '==', currentParty)
-            .onSnapshot(snapshot => {
-                const list = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }))
-                setMeets(list)
-                setCurrentMeet(list[0]?.id)
-            })
+        if (currentParty) {
+            const unsubMeets = db
+                .collection('meets')
+                .where('party', '==', currentParty)
+                .onSnapshot(snapshot => {
+                    const list = snapshot.docs.map(doc => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }))
+                    setMeets(list)
+                    setCurrentMeet(list[0]?.id)
+                })
 
-        return () => {unsubMeets()}
+            return () => {
+                unsubMeets()
+            }
+        }
     }, [currentParty])
 
     return (
@@ -40,7 +44,7 @@ const Meets = ({currentParty}) => {
                             <input
                                 type="radio"
                                 id={item.title}
-                                name='meet'
+                                name="meet"
                                 value={item.id}
                                 checked={currentMeet === item.id}
                                 onChange={handleChange}

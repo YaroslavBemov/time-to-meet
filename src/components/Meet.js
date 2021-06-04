@@ -109,6 +109,7 @@ const Meet = ({currentMeet}) => {
                     const data = doc.data()
                     setMeet(data)
                 })
+
             return () => {
                 unsubscribeMeet()
             }
