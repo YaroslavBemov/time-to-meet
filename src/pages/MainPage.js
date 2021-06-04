@@ -1,10 +1,11 @@
 import React from 'react'
+import Party from '../components/Party'
 
 const MainPage = () => {
     return (
-        <div>
-            <h1>Main Page</h1>
-        </div>
+        <>
+         <Party/>
+        </>
     )
 }
 

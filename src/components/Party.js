@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import {useRouteMatch, Switch, Route, Link, useHistory} from 'react-router-dom'
 import Meets from './Meets'
 import {db} from '../adapters/firebase'
 import {useAuth} from '../contexts/AuthContext'
@@ -33,7 +32,7 @@ const Party = () => {
         return () => {
             unsubParty()
         }
-    }, [])
+    }, [id])
 
     return (
         <div>
@@ -61,12 +60,6 @@ const Party = () => {
             <hr/>
 
             <Meets currentParty={currentParty}/>
-
-            {/*<Switch>*/}
-            {/*    <Route path={`${match.path}/:party`}>*/}
-            {/*        <MeetsPage  currentId={currentId}/>*/}
-            {/*    </Route>*/}
-            {/*</Switch>*/}
         </div>
     )
 }

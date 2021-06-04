@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react'
-import {useParams, useHistory, useRouteMatch} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 
 import {useAuth} from '../contexts/AuthContext'
 import {db} from '../adapters/firebase'
@@ -77,7 +77,7 @@ const Meet = ({currentMeet}) => {
                 })
             })
             .then(() => {
-                console.log("Document successfully updated!")
+                console.log('Document successfully updated!')
             })
             .catch(error => {
                 console.log(error.message)
@@ -92,7 +92,7 @@ const Meet = ({currentMeet}) => {
             .doc(currentMeet)
             .delete()
             .then(() => {
-                console.log("Document successfully deleted!")
+                console.log('Document successfully deleted!')
                 history.push(MEETS)
             })
             .catch(error => {
@@ -101,17 +101,19 @@ const Meet = ({currentMeet}) => {
     }
 
     useEffect(() => {
-        const unsubscribeMeet = db
-            .collection('meets')
-            .doc(currentMeet)
-            .onSnapshot(doc => {
-                const data = doc.data()
-                setMeet(data)
-            })
-
-        return () => {
-            unsubscribeMeet()
+        if (currentMeet) {
+            const unsubscribeMeet = db
+                .collection('meets')
+                .doc(currentMeet)
+                .onSnapshot(doc => {
+                    const data = doc.data()
+                    setMeet(data)
+                })
+            return () => {
+                unsubscribeMeet()
+            }
         }
+
     }, [currentMeet])
 
     return (
@@ -134,13 +136,13 @@ const Meet = ({currentMeet}) => {
             </div>
             <label>From:
                 <input
-                    type='text'
+                    type="text"
                     ref={fromRef}
                 />
             </label><br/>
             <label>To:
                 <input
-                    type='text'
+                    type="text"
                     ref={toRef}
                 />
             </label><br/>

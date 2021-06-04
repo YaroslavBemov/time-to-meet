@@ -1,6 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import {Link, Switch, Route, useRouteMatch} from 'react-router-dom'
-import MeetPage from './MeetPage'
 import {db} from '../adapters/firebase'
 import Meet from './Meet'
 
@@ -25,6 +23,8 @@ const Meets = ({currentParty}) => {
                 setMeets(list)
                 setCurrentMeet(list[0]?.id)
             })
+
+        return () => {unsubMeets()}
     }, [currentParty])
 
     return (
