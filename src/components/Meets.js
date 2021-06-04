@@ -4,7 +4,7 @@ import MeetPage from './MeetPage'
 import {db} from '../adapters/firebase'
 import Meet from './Meet'
 
-const MeetsPage = ({currentParty}) => {
+const Meets = ({currentParty}) => {
     const [meets, setMeets] = useState([])
     const [currentMeet, setCurrentMeet] = useState('')
 
@@ -58,4 +58,4 @@ const MeetsPage = ({currentParty}) => {
     )
 }
 
-export default MeetsPage
+export default Meets

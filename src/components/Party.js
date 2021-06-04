@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import {useRouteMatch, Switch, Route, Link, useHistory} from 'react-router-dom'
-import MeetsPage from './MeetsPage'
+import Meets from './Meets'
 import {db} from '../adapters/firebase'
 import {useAuth} from '../contexts/AuthContext'
 
-const PartyPage = () => {
+const Party = () => {
     const [party, setParty] = useState([])
     const [currentParty, setCurrentParty] = useState('')
     const {currentUser} = useAuth()
@@ -60,7 +60,7 @@ const PartyPage = () => {
 
             <hr/>
 
-            <MeetsPage currentParty={currentParty}/>
+            <Meets currentParty={currentParty}/>
 
             {/*<Switch>*/}
             {/*    <Route path={`${match.path}/:party`}>*/}
@@ -71,4 +71,4 @@ const PartyPage = () => {
     )
 }
 
-export default PartyPage
+export default Party
