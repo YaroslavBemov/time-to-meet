@@ -27,7 +27,7 @@ const Scale = ({value}) => {
             }
             }>
             <span style={{
-                background: 'linear-gradient(190.54deg, #FFD54B -13.68%, #D10302 92.16%)',
+                background: 'linear-gradient(rgba(255, 213, 75, 1) -15%, rgba(209, 3, 2, 1) 90%)',
                 borderRadius: '20px',
                 gridArea: `1 / ${start} / 2 / ${finish}`
             }}
