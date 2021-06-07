@@ -34,8 +34,8 @@ const Meets = () => {
 
     return (
         <section className='meets'>
-            <h1>MEETS PAGE</h1>
-            <form>
+            <h1>Встречи</h1>
+            <div>
                 {!meets
                     ? null
                     : meets.map(item => (
@@ -53,11 +53,7 @@ const Meets = () => {
                             {item.id}
                         </label>
                     ))}
-            </form>
-
-            <hr/>
-
-
+            </div>
         </section>
 
     )

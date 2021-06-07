@@ -1,3 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap')
+
+$primary-white: rgba(255, 255, 255, 1)
+$secondary-gray: rgba(165, 165, 165, 1)
+
+$background-color: linear-gradient(296.82deg, #363636 0%, #424242 100%)
+$box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 0.1), inset 16px 10px 30px rgba(0, 0, 0, 0.4)
+$border-radius: 10px
+
+@mixin inner-block()
+    background: $background-color
+    box-shadow: $box-shadow
+    border-radius: $border-radius
+
 *
     margin: 0
     padding: 0
@@ -5,6 +19,37 @@
 
 html, body
     height: 100%
+    font-family: 'Roboto', sans-serif
+    font-style: normal
+    color: $primary-white
 
 #root
     height: 100%
+    padding: 20px calc(50% - 1180px/2) 80px
+    background: $background-color
+    display: flex
+    flex-direction: column
+
+    nav
+        @include inner-block
+
+    main
+        padding-top: 20px
+        grid-area: 2 / 1 / 3 / 13
+        display: grid
+        grid-template-columns: repeat(12, 1fr)
+        grid-template-rows: 1fr
+        column-gap: 20px
+
+        .party
+            @include inner-block
+            padding: 40px
+            grid-area: 1 / 1 / 2 / 4
+
+        .meets
+            padding: 40px
+            grid-area: 1 / 4 / 2 / 7
+
+        .meet
+            padding: 40px
+            grid-area: 1 / 7 / 2 / 13

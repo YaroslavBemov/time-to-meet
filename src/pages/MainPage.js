@@ -1,5 +1,5 @@
 import React from 'react'
-import Party from '../components/Party'
+import Party from '../components/party/Party'
 import {MainProvider} from '../contexts/MainContext'
 import Meets from '../components/Meets'
 import Meet from '../components/Meet'
@@ -7,9 +7,11 @@ import Meet from '../components/Meet'
 const MainPage = () => {
     return (
         <MainProvider>
-            <Party/>
-            <Meets/>
-            <Meet/>
+            <main>
+                <Party/>
+                <Meets/>
+                <Meet/>
+            </main>
         </MainProvider>
     )
 }
