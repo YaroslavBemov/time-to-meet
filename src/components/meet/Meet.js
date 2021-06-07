@@ -26,6 +26,7 @@ const Meet = () => {
 
     let total = {}
     let members = []
+    //TODO fix button
     let isJoinDisable = false
     let isDeleteDisable = true
 
