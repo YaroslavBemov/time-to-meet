@@ -52,6 +52,7 @@ const Party = () => {
                             key={item.id}
                         >
                             <input
+                                className={styles.input}
                                 type="radio"
                                 id={item.title}
                                 name="party"
