@@ -43,7 +43,7 @@ const Party = () => {
     return (
         <section className="party">
             <h1 className={styles.heading}>Команды</h1>
-            <div>
+            <div className={styles.list}>
                 {!party
                     ? null
                     : party.map(item => (

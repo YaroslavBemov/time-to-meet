@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {db} from '../adapters/firebase'
-import {MainContext} from '../contexts/MainContext'
+import {db} from '../../adapters/firebase'
+import {MainContext} from '../../contexts/MainContext'
+import styles from './Meets.module.sass'
 
 const Meets = () => {
     console.log('MEETS')
@@ -34,12 +35,13 @@ const Meets = () => {
 
     return (
         <section className='meets'>
-            <h1>Встречи</h1>
-            <div>
+            <h1 className={styles.heading}>Встречи</h1>
+            <div className={styles.list}>
                 {!meets
                     ? null
                     : meets.map(item => (
                         <label
+                            className={styles.label}
                             key={item.id}
                         >
                             <input
@@ -50,7 +52,7 @@ const Meets = () => {
                                 checked={currentMeet === item.id}
                                 onChange={handleChange}
                             />
-                            {item.id}
+                            {item.title}
                         </label>
                     ))}
             </div>

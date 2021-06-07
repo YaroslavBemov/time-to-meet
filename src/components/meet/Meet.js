@@ -1,14 +1,17 @@
 import React, {useContext, useEffect, useRef, useState} from 'react'
 import {useHistory} from 'react-router-dom'
 
-import {useAuth} from '../contexts/AuthContext'
-import {db} from '../adapters/firebase'
+import {useAuth} from '../../contexts/AuthContext'
+import {db} from '../../adapters/firebase'
 //V9
 // import {doc, updateDoc} from 'firebase/firestore'
 import firebase from 'firebase/app'
-import {MEETS} from '../constants/routes'
-import compareRange from '../utils/compareRange'
-import {MainContext} from '../contexts/MainContext'
+import {MEETS} from '../../constants/routes'
+import compareRange from '../../utils/compareRange'
+import {MainContext} from '../../contexts/MainContext'
+
+import styles from './Meet.module.sass'
+import Scale from '../scale/Scale'
 
 const Meet = () => {
     console.log('MEET')
@@ -119,11 +122,24 @@ const Meet = () => {
 
     }, [currentMeet])
 
+    const value = {
+        from: meet.from,
+        to: meet.to,
+        total: {
+            from: total.from,
+            to: total.to
+        }
+    }
+
     return (
         <section className='meet'>
             <div>
-                <h1>ID={currentMeet}</h1>
-                <p>Who: <b>{meet && meet.name}</b></p>
+                {/*<h1 className={styles.heading}>{meet && meet.title}</h1>*/}
+                <p className={styles.title}>Встречу создал: <span className={styles.text}>{meet && meet.name}</span></p>
+                <p className={styles.title}>Комментарий: <span className={styles.text}>{meet && meet.description}</span></p>
+
+                <Scale value={value}/>
+
                 <p>When: <b>{meet && meet.date}</b></p>
                 <p>From: <b>{meet && meet.from}</b> To: <b>{meet && meet.to}</b></p>
             </div>
