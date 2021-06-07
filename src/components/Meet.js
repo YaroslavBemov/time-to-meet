@@ -11,6 +11,7 @@ import compareRange from '../utils/compareRange'
 import {MainContext} from '../contexts/MainContext'
 
 const Meet = () => {
+    console.log('MEET')
     const {currentUser} = useAuth()
     const {currentMeet} = useContext(MainContext)
     const [meet, setMeet] = useState([])

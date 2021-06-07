@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react'
 import {db} from '../adapters/firebase'
-import Meet from './Meet'
 import {MainContext} from '../contexts/MainContext'
 
 const Meets = () => {
+    console.log('MEETS')
     const [meets, setMeets] = useState([])
     const {currentParty, currentMeet, setCurrentMeet} = useContext(MainContext)
 

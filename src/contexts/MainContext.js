@@ -1,6 +1,6 @@
 import {createContext, useState} from 'react'
 
-export const MainContext = createContext()
+export const MainContext = createContext({})
 
 export function MainProvider({children}) {
     const [party, setParty] = useState([])
@@ -8,10 +8,9 @@ export function MainProvider({children}) {
     const [currentMeet, setCurrentMeet] = useState('')
 
     const value = {
-        currentParty,
-        setCurrentParty,
-        currentMeet,
-        setCurrentMeet
+        party, setParty,
+        currentParty, setCurrentParty,
+        currentMeet, setCurrentMeet
     }
 
     return (
