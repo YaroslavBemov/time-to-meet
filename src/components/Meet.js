@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useContext, useEffect, useRef, useState} from 'react'
 import {useHistory} from 'react-router-dom'
 
 import {useAuth} from '../contexts/AuthContext'
@@ -8,10 +8,11 @@ import {db} from '../adapters/firebase'
 import firebase from 'firebase/app'
 import {MEETS} from '../constants/routes'
 import compareRange from '../utils/compareRange'
+import {MainContext} from '../contexts/MainContext'
 
-const Meet = ({currentMeet}) => {
+const Meet = () => {
     const {currentUser} = useAuth()
-
+    const {currentMeet} = useContext(MainContext)
     const [meet, setMeet] = useState([])
 
     const fromRef = useRef()
@@ -118,7 +119,7 @@ const Meet = ({currentMeet}) => {
     }, [currentMeet])
 
     return (
-        <div>
+        <section className='meet'>
             <div>
                 <h1>ID={currentMeet}</h1>
                 <p>Who: <b>{meet && meet.name}</b></p>
@@ -157,7 +158,7 @@ const Meet = ({currentMeet}) => {
                 onClick={deleteMeet}
             >Delete
             </button>
-        </div>
+        </section>
 
     )
 }

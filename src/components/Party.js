@@ -1,11 +1,12 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import Meets from './Meets'
 import {db} from '../adapters/firebase'
 import {useAuth} from '../contexts/AuthContext'
+import {MainContext} from '../contexts/MainContext'
 
 const Party = () => {
     const [party, setParty] = useState([])
-    const [currentParty, setCurrentParty] = useState('')
+    const {currentParty, setCurrentParty} = useContext(MainContext)
     const {currentUser} = useAuth()
 
     const id = currentUser.uid
@@ -35,7 +36,7 @@ const Party = () => {
     }, [id])
 
     return (
-        <div>
+        <section className='party'>
             <h1>PARTY PAGE</h1>
             <div>
                 {!party
@@ -59,8 +60,8 @@ const Party = () => {
 
             <hr/>
 
-            <Meets currentParty={currentParty}/>
-        </div>
+
+        </section>
     )
 }
 

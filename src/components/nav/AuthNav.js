@@ -9,11 +9,11 @@ const AuthNav = () => {
     const {signOut} = useAuth()
 
     return (
-        <div>
+        <nav>
             <Link to={ROUTE.LANDING}>Landing</Link><br/>
             <Link to={ROUTE.MAIN}>APP</Link><br/>
             <button onClick={() => signOut()}>Sign Out</button>
-        </div>
+        </nav>
     )
 }
 

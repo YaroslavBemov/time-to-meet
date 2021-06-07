@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {db} from '../adapters/firebase'
 import Meet from './Meet'
+import {MainContext} from '../contexts/MainContext'
 
-const Meets = ({currentParty}) => {
+const Meets = () => {
     const [meets, setMeets] = useState([])
-    const [currentMeet, setCurrentMeet] = useState('')
+    const {currentParty, currentMeet, setCurrentMeet} = useContext(MainContext)
 
     const handleChange = e => {
         const {value} = e.target
@@ -32,7 +33,7 @@ const Meets = ({currentParty}) => {
     }, [currentParty])
 
     return (
-        <div>
+        <section className='meets'>
             <h1>MEETS PAGE</h1>
             <form>
                 {!meets
@@ -56,8 +57,8 @@ const Meets = ({currentParty}) => {
 
             <hr/>
 
-            <Meet currentMeet={currentMeet}/>
-        </div>
+
+        </section>
 
     )
 }

@@ -6,12 +6,12 @@ import * as ROUTE from '../../constants/routes'
 const MainNav = () => {
 
     return (
-        <div>
+        <nav>
             <Link to={ROUTE.LANDING}>Landing</Link><br/>
             <Link to={ROUTE.SIGNUP}>Sign Up</Link><br/>
             <Link to={ROUTE.SIGNIN}>Sign In</Link><br/>
             <Link to={ROUTE.RESET_PASSWORD}>Reset Password</Link><br/>
-        </div>
+        </nav>
     )
 }
 
