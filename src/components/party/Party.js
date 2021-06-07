@@ -4,18 +4,7 @@ import {db} from '../../adapters/firebase'
 import {useAuth} from '../../contexts/AuthContext'
 import {MainContext} from '../../contexts/MainContext'
 
-const style = {
-    heading: {
-        fontWeight: 'bold',
-        fontSize: '24px',
-        lineHeight: '28px'
-    },
-    label: {
-        fontWeight: 500,
-        fontSize: '18px',
-        lineHeight: '21px'
-    }
-}
+import styles from './Party.module.sass'
 
 const Party = () => {
     console.log('PARTY')
@@ -53,13 +42,13 @@ const Party = () => {
 
     return (
         <section className="party">
-            <h1 style={style.heading}>Команды</h1>
+            <h1 className={styles.heading}>Команды</h1>
             <div>
                 {!party
                     ? null
                     : party.map(item => (
                         <label
-                            style={style.label}
+                            className={styles.label}
                             key={item.id}
                         >
                             <input

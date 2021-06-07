@@ -3,13 +3,19 @@
 $primary-white: rgba(255, 255, 255, 1)
 $secondary-gray: rgba(165, 165, 165, 1)
 
-$background-color: linear-gradient(296.82deg, #363636 0%, #424242 100%)
-$box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 0.1), inset 16px 10px 30px rgba(0, 0, 0, 0.4)
+$background-gradient: linear-gradient(296.82deg, #363636 0%, #424242 100%)
+$box-shadow-inner: inset -2px -2px 5px rgba(255, 255, 255, 0.1), inset 16px 10px 30px rgba(0, 0, 0, 0.4)
+$box-shadow-outer: 8px 6px 10px rgba(0, 0, 0, 0.4), inset 2px 2px 5px rgba(255, 255, 255, 0.1)
 $border-radius: 10px
 
 @mixin inner-block()
-    background: $background-color
-    box-shadow: $box-shadow
+    background: $background-gradient
+    box-shadow: $box-shadow-inner
+    border-radius: $border-radius
+
+@mixin outer-block
+    background: $background-gradient
+    box-shadow: $box-shadow-outer
     border-radius: $border-radius
 
 *
@@ -26,7 +32,7 @@ html, body
 #root
     height: 100%
     padding: 20px calc(50% - 1180px/2) 80px
-    background: $background-color
+    background: $background-gradient
     display: flex
     flex-direction: column
 
