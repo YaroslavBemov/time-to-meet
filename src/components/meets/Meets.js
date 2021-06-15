@@ -34,7 +34,7 @@ const Meets = () => {
     }, [currentParty])
 
     return (
-        <section className='meets'>
+        <section className="meets">
             <h1 className={styles.heading}>Встречи</h1>
             <div className={styles.list}>
                 {!meets
@@ -46,6 +46,7 @@ const Meets = () => {
                         >
                             <input
                                 type="radio"
+                                className={styles.input}
                                 id={item.title}
                                 name="meet"
                                 value={item.id}
@@ -53,6 +54,9 @@ const Meets = () => {
                                 onChange={handleChange}
                             />
                             {item.title}
+                            <span
+                                className={styles.span}
+                            />
                         </label>
                     ))}
             </div>

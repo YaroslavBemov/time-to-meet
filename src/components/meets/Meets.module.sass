@@ -2,13 +2,88 @@
     font-weight: bold
     font-size: 24px
     line-height: 28px
-
-.label
-    font-weight: 500
-    font-size: 18px
-    line-height: 21px
+    margin-bottom: 30px
 
 .list
     display: flex
     flex-direction: column
 
+.label 
+    display: block
+    position: relative
+    padding-left: 35px
+    margin-bottom: 12px
+    cursor: pointer
+    font-size: 22px
+    -webkit-user-select: none
+    -moz-user-select: none
+    -ms-user-select: none
+    user-select: none
+
+
+/* Hide the browser's default radio button */
+.label input 
+    position: absolute
+    opacity: 0
+    cursor: pointer
+    height: 0
+    width: 0
+
+
+/* Create a custom radio button */
+.span 
+    position: absolute
+    top: 0
+    left: 0
+    height: 24px
+    width: 24px
+    background: linear-gradient(296.82deg, #363636 0%, #424242 100%)
+    box-shadow: 8px 6px 10px rgba(0, 0, 0, 0.4), inset 2px 2px 5px rgba(255, 255, 255, 0.1)
+    border-radius: 10px
+
+
+/* On mouse-over, add a grey background color */
+.label:hover input ~ .span:after
+    border-color: rgba(255, 171, 20, 1)
+
+
+/* When the radio button is checked, add a blue background */
+.label input:checked ~ .span
+    background: linear-gradient(296.82deg, #363636 0%, #424242 100%)
+    box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 0.1), inset 16px 10px 30px rgba(0, 0, 0, 0.4)
+    border-radius: 10px
+    //background-color: rgba(255, 171, 20, 1)
+    //background: linear-gradient(296.82deg, #363636 0%, #424242 100%)
+
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.span:after 
+    content: ''
+    position: absolute
+    top: 7px
+    left: 7px
+    height: 8px
+    width: 8px
+    border: 1px solid #FFFFFF
+    border-radius: 50%
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.span:before
+    content: ''
+    position: absolute
+    display: none
+    top: 9px
+    left: 9px
+    width: 6px
+    height: 6px
+    border-radius: 50%
+    background: white
+
+/* Show the indicator (dot/circle) when checked */
+.label input:checked ~ .span:after 
+    border-color: rgba(255, 171, 20, 1)
+
+/* Show the indicator (dot/circle) when checked */
+.label input:checked ~ .span:before
+    display: block
+    background: rgba(255, 171, 20, 1)
