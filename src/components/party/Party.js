@@ -5,6 +5,7 @@ import {useAuth} from '../../contexts/AuthContext'
 import {MainContext} from '../../contexts/MainContext'
 
 import styles from './Party.module.sass'
+import {ReactComponent as People} from '../../images/people.svg'
 
 const Party = () => {
     console.log('PARTY')
@@ -61,6 +62,11 @@ const Party = () => {
                                 onChange={handleChange}
                             />
                             {item.title}
+                            <span
+                                className={styles.span}
+                            >
+                                <People className={styles.icon} />
+                            </span>
                         </label>
                     ))}
             </div>
