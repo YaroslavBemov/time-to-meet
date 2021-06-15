@@ -133,11 +133,12 @@ const Meet = () => {
     }
 
     return (
-        <section className='meet'>
+        <section className="meet">
             <div>
                 {/*<h1 className={styles.heading}>{meet && meet.title}</h1>*/}
                 <p className={styles.title}>Встречу создал: <span className={styles.text}>{meet && meet.name}</span></p>
-                <p className={styles.title}>Комментарий: <span className={styles.text}>{meet && meet.description}</span></p>
+                <p className={styles.title}>Комментарий: <span className={styles.text}>{meet && meet.description}</span>
+                </p>
 
                 <Scale value={value}/>
 
@@ -145,14 +146,25 @@ const Meet = () => {
                 <p>From: <b>{meet && meet.from}</b> To: <b>{meet && meet.to}</b></p>
             </div>
             <div>
-                <h3>Members</h3>
-                <ul>
-                    {members && members.map(item => (
-                        <li key={item.uid}>Name: <b>{item.name}</b> from: <b>{item.from}</b> to: <b>{item.to}</b></li>
-                    ))}
-                </ul>
-                <h3>Total</h3>
-                <p>From: <b>{total && total.from}</b> To: <b>{total && total.to}</b></p>
+                <h3
+                    className={styles.h3}
+                >Участники голосования</h3>
+                {!members
+                    ? null
+                    : members.map(item => (
+                    <Scale
+                        key={item.uid}
+                        value={{
+                            name: item.name,
+                            from: item.from,
+                            to: item.to,
+                            total: {
+                                from: total.from,
+                                to: total.to
+                            }
+                        }}
+                    />
+                ))}
             </div>
             <label>From:
                 <input

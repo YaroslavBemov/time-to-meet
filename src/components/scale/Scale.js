@@ -34,6 +34,11 @@ const Scale = ({value}) => {
             />
             </div>
             <div className={styles.scale}>
+                {!value.name
+                    ? null
+                    : <span
+                        className={styles.scaleSpan}
+                    >{value.name}</span>}
                 {spans && spans.map(item => (
                     <span
                         className={styles.scaleSpan}
