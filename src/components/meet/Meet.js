@@ -139,6 +139,7 @@ const Meet = () => {
                 <p className={styles.title}>Когда: <span className={styles.text}>{meet && meet.date}</span></p>
                 <p className={styles.title}>Комментарий: <span className={styles.text}>{meet && meet.description}</span></p>
                 <Scale value={value}/>
+                <p className={styles.join}>Ваш голос: </p>
             </div>
             <div>
                 <h3
@@ -161,28 +162,28 @@ const Meet = () => {
                     />
                 ))}
             </div>
-            <label>From:
-                <input
-                    type="text"
-                    ref={fromRef}
-                />
-            </label><br/>
-            <label>To:
-                <input
-                    type="text"
-                    ref={toRef}
-                />
-            </label><br/>
-            <button
-                disabled={isJoinDisable}
-                onClick={joinMeet}
-            >Join
-            </button>
-            <button
-                disabled={isDeleteDisable}
-                onClick={deleteMeet}
-            >Delete
-            </button>
+            {/*<label>From:*/}
+            {/*    <input*/}
+            {/*        type="text"*/}
+            {/*        ref={fromRef}*/}
+            {/*    />*/}
+            {/*</label><br/>*/}
+            {/*<label>To:*/}
+            {/*    <input*/}
+            {/*        type="text"*/}
+            {/*        ref={toRef}*/}
+            {/*    />*/}
+            {/*</label><br/>*/}
+            {/*<button*/}
+            {/*    disabled={isJoinDisable}*/}
+            {/*    onClick={joinMeet}*/}
+            {/*>Join*/}
+            {/*</button>*/}
+            {/*<button*/}
+            {/*    disabled={isDeleteDisable}*/}
+            {/*    onClick={deleteMeet}*/}
+            {/*>Delete*/}
+            {/*</button>*/}
         </section>
 
     )
