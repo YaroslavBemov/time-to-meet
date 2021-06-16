@@ -3,9 +3,15 @@ import styles from './Scale.module.sass'
 
 const Scale = ({value}) => {
     console.log(value)
-    const frames = +value.to - +value.from
-    const start = +value.total.from - +value.from + 1
-    const finish = frames - (+value.to - +value.total.to) + 1
+    let frames = +value.to - +value.from
+    let start = +value.total.from - +value.from + 1
+    let finish = frames - (+value.to - +value.total.to) + 1
+
+    if (value.name) {
+        frames += 1
+        start += 1
+        finish += 1
+    }
 
     console.log(`Frames = ${frames}`)
     console.log(`Start = ${start}`)

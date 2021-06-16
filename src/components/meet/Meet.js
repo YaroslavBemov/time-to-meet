@@ -156,11 +156,11 @@ const Meet = () => {
                         key={item.uid}
                         value={{
                             name: item.name,
-                            from: item.from,
-                            to: item.to,
+                            from: meet.from,
+                            to: meet.to,
                             total: {
-                                from: total.from,
-                                to: total.to
+                                from: item.from,
+                                to: item.to
                             }
                         }}
                     />
