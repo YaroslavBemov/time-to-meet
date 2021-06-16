@@ -106,6 +106,16 @@ const Meet = () => {
             })
     }
 
+    const selectHandleFrom = (e) => {
+        fromRef.current.value = e.target.value
+        console.log(fromRef.current.value)
+    }
+
+    const selectHandleTo = (e) => {
+        toRef.current.value = e.target.value
+        console.log(toRef.current.value)
+    }
+
     useEffect(() => {
         if (currentMeet) {
             const unsubscribeMeet = db
@@ -132,14 +142,58 @@ const Meet = () => {
         }
     }
 
+    let optionsFrom = [],
+        optionsTo = []
+
+    for (let i = meet.from; i < meet.to; i++) {
+        optionsFrom.push({
+            value: i,
+            label: `${i}:00`
+        })
+    }
+
+    for (let i = +meet.from + 1; i <= meet.to; i++) {
+        optionsTo.push({
+            value: i,
+            label: `${i}:00`
+        })
+    }
+
     return (
         <section className="meet">
             <div>
                 <p className={styles.title}>Встречу создал: <span className={styles.text}>{meet && meet.name}</span></p>
                 <p className={styles.title}>Когда: <span className={styles.text}>{meet && meet.date}</span></p>
-                <p className={styles.title}>Комментарий: <span className={styles.text}>{meet && meet.description}</span></p>
+                <p className={styles.title}>Комментарий: <span className={styles.text}>{meet && meet.description}</span>
+                </p>
                 <Scale value={value}/>
-                <p className={styles.join}>Ваш голос: </p>
+                <div className={styles.join}>
+                    <span>Ваш голос:</span>
+                    <span>с</span>
+                    <select
+                        className={styles.select}
+                        ref={fromRef}
+                        onChange={selectHandleFrom}
+                    >
+                        {optionsFrom.map(option => (
+                            <option value={option.value}>{option.label}</option>
+                        ))}
+                    </select>
+                    <span>по</span>
+                    <select
+                        className={styles.select}
+                        ref={toRef}
+                        onChange={selectHandleTo}
+                    >
+                        {optionsTo.map(option => (
+                            <option value={option.value}>{option.label}</option>
+                        ))}
+                    </select>
+                    <button
+                        className={styles.vote}
+                    >Голосовать
+                    </button>
+                </div>
             </div>
             <div>
                 <h3
@@ -148,19 +202,19 @@ const Meet = () => {
                 {!members
                     ? null
                     : members.map(item => (
-                    <Scale
-                        key={item.uid}
-                        value={{
-                            name: item.name,
-                            from: meet.from,
-                            to: meet.to,
-                            total: {
-                                from: item.from,
-                                to: item.to
-                            }
-                        }}
-                    />
-                ))}
+                        <Scale
+                            key={item.uid}
+                            value={{
+                                name: item.name,
+                                from: meet.from,
+                                to: meet.to,
+                                total: {
+                                    from: item.from,
+                                    to: item.to
+                                }
+                            }}
+                        />
+                    ))}
             </div>
             {/*<label>From:*/}
             {/*    <input*/}
