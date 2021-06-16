@@ -135,15 +135,10 @@ const Meet = () => {
     return (
         <section className="meet">
             <div>
-                {/*<h1 className={styles.heading}>{meet && meet.title}</h1>*/}
                 <p className={styles.title}>Встречу создал: <span className={styles.text}>{meet && meet.name}</span></p>
-                <p className={styles.title}>Комментарий: <span className={styles.text}>{meet && meet.description}</span>
-                </p>
-
+                <p className={styles.title}>Когда: <span className={styles.text}>{meet && meet.date}</span></p>
+                <p className={styles.title}>Комментарий: <span className={styles.text}>{meet && meet.description}</span></p>
                 <Scale value={value}/>
-
-                <p>When: <b>{meet && meet.date}</b></p>
-                <p>From: <b>{meet && meet.from}</b> To: <b>{meet && meet.to}</b></p>
             </div>
             <div>
                 <h3
