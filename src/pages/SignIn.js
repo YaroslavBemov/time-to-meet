@@ -39,29 +39,28 @@ const SignIn = () => {
         <div>
             <h1>Sign In</h1>
             <form onSubmit={event => handleSignIn(event)}>
-                {error}<br/>
+                {error}
+                <br/>
                 <label>
                     Email
-                    <input
-                        type='text'
-                        ref={emailRef}
-                        placeholder='Email'
-                        required={true}
+                    <input type="text"
+                           ref={emailRef}
+                           placeholder="Email"
+                           required={true}
                     />
-                </label><br/>
+                </label>
+                <br/>
                 <label>
                     Password
-                    <input
-                        type='password'
-                        ref={passwordRef}
-                        placeholder='Password'
-                        required={true}
+                    <input type="password"
+                           ref={passwordRef}
+                           placeholder="Password"
+                           required={true}
                     />
-                </label><br/>
-                <button
-                    disabled={loading}
-                    type='submit'
-                >
+                </label>
+                <br/>
+                <button disabled={loading}
+                        type="submit">
                     Sign In
                 </button>
             </form>

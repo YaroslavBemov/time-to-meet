@@ -33,17 +33,18 @@ const ResetPassword = () => {
         <div>
             <h1>Reset Password</h1>
             <form onSubmit={event => handleResetPassword(event)}>
-                {error}<br/>
-                {message}<br/>
-                <input
-                    type='text'
-                    ref={emailRef}
-                    placeholder='Email'
-                    required={true}
+                {error}
+                <br/>
+                {message}
+                <br/>
+                <input type='text'
+                        ref={emailRef}
+                        placeholder='Email'
+                        required={true}
                 />
-                <button
-                disabled={loading}
-                >Reset Password</button>
+                <button disabled={loading}>
+                    Reset Password
+                </button>
             </form>
         </div>
     )

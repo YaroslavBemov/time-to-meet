@@ -44,35 +44,33 @@ const SignUp = () => {
                 {error}<br/>
                 <label>
                     Name
-                    <input
-                        type='text'
-                        ref={userNameRef}
-                        placeholder='Name'
-                        required={true}
+                    <input type="text"
+                           ref={userNameRef}
+                           placeholder="Name"
+                           required={true}
                     />
-                </label><br/>
+                </label>
+                <br/>
                 <label>
                     Email
-                    <input
-                        type='text'
-                        ref={emailRef}
-                        placeholder='Email'
-                        required={true}
+                    <input type="text"
+                           ref={emailRef}
+                           placeholder="Email"
+                           required={true}
                     />
-                </label><br/>
+                </label>
+                <br/>
                 <label>
                     Password
-                    <input
-                        type='password'
-                        ref={passwordRef}
-                        placeholder='Password'
-                        required={true}
+                    <input type="password"
+                           ref={passwordRef}
+                           placeholder="Password"
+                           required={true}
                     />
-                </label><br/>
-                <button
-                disabled={loading}
-                type='submit'
-                >
+                </label>
+                <br/>
+                <button disabled={loading}
+                        type="submit">
                     Sign Up
                 </button>
             </form>

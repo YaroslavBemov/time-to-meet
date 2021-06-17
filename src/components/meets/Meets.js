@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from 'react'
 import {db} from '../../adapters/firebase'
 import {MainContext} from '../../contexts/MainContext'
 import styles from './Meets.module.sass'
+import {ReactComponent as Plus} from '../../images/plus.svg'
 
 const Meets = () => {
     console.log('MEETS')
@@ -35,28 +36,26 @@ const Meets = () => {
 
     return (
         <section className="meets">
-            <h1 className={styles.heading}>Встречи</h1>
+            <h1 className={styles.heading}>
+                Встречи
+            </h1>
             <div className={styles.list}>
                 {!meets
                     ? null
                     : meets.map(item => (
-                        <label
-                            className={styles.label}
-                            key={item.id}
+                        <label className={styles.label}
+                               key={item.id}
                         >
-                            <input
-                                type="radio"
-                                className={styles.input}
-                                id={item.title}
-                                name="meet"
-                                value={item.id}
-                                checked={currentMeet === item.id}
-                                onChange={handleChange}
+                            <input className={styles.input}
+                                   type="radio"
+                                   id={item.title}
+                                   name="meet"
+                                   value={item.id}
+                                   checked={currentMeet === item.id}
+                                   onChange={handleChange}
                             />
                             {item.title}
-                            <span
-                                className={styles.span}
-                            />
+                            <span className={styles.span}/>
                         </label>
                     ))}
             </div>

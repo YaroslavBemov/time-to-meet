@@ -28,6 +28,7 @@ const Meet = () => {
     let members = []
     //TODO fix button
     let isJoinDisable = false
+    console.log(`isJoinDisable = ${isJoinDisable}`)
     let isDeleteDisable = true
 
     if (meet) {
@@ -51,6 +52,7 @@ const Meet = () => {
             }
 
             isJoinDisable = !!members.find(member => member.uid === meet.uid)
+            console.log(`isJoinDisable = ${isJoinDisable}`)
         }
     }
 
@@ -89,8 +91,8 @@ const Meet = () => {
                 console.log(error.message)
             })
 
-        fromRef.current.value = ''
-        toRef.current.value = ''
+        // fromRef.current.value = ''
+        // toRef.current.value = ''
     }
 
     const deleteMeet = () => {
@@ -162,43 +164,53 @@ const Meet = () => {
     return (
         <section className="meet">
             <div>
-                <p className={styles.title}>Встречу создал: <span className={styles.text}>{meet && meet.name}</span></p>
-                <p className={styles.title}>Когда: <span className={styles.text}>{meet && meet.date}</span></p>
-                <p className={styles.title}>Комментарий: <span className={styles.text}>{meet && meet.description}</span>
+                <p className={styles.title}>
+                    Встречу создал: <span className={styles.text}>{meet && meet.name}</span>
                 </p>
+                <p className={styles.title}>
+                    Когда: <span className={styles.text}>{meet && meet.date}</span>
+                </p>
+                <p className={styles.title}>
+                    Комментарий: <span className={styles.text}>{meet && meet.description}</span>
+                </p>
+
                 <Scale value={value}/>
-                <div className={styles.join}>
+
+                <div className={styles.join}
+                     style={{display: isJoinDisable ? 'none' : 'flex'}}
+                >
                     <span>Ваш голос:</span>
                     <span>с</span>
-                    <select
-                        className={styles.select}
-                        ref={fromRef}
-                        onChange={selectHandleFrom}
+                    <select className={styles.select}
+                            ref={fromRef}
+                            onChange={selectHandleFrom}
                     >
                         {optionsFrom.map(option => (
                             <option value={option.value}>{option.label}</option>
                         ))}
                     </select>
                     <span>по</span>
-                    <select
-                        className={styles.select}
-                        ref={toRef}
-                        onChange={selectHandleTo}
+                    <select className={styles.select}
+                            ref={toRef}
+                            onChange={selectHandleTo}
                     >
                         {optionsTo.map(option => (
                             <option value={option.value}>{option.label}</option>
                         ))}
                     </select>
-                    <button
-                        className={styles.vote}
-                    >Голосовать
+                    <button className={styles.vote}
+                            onClick={joinMeet}
+                            disabled={isJoinDisable}
+                    >
+                        Голосовать
                     </button>
                 </div>
+
             </div>
             <div>
-                <h3
-                    className={styles.h3}
-                >Участники голосования</h3>
+                <h3 className={styles.h3}>
+                    Участники голосования
+                </h3>
                 {!members
                     ? null
                     : members.map(item => (
@@ -216,28 +228,6 @@ const Meet = () => {
                         />
                     ))}
             </div>
-            {/*<label>From:*/}
-            {/*    <input*/}
-            {/*        type="text"*/}
-            {/*        ref={fromRef}*/}
-            {/*    />*/}
-            {/*</label><br/>*/}
-            {/*<label>To:*/}
-            {/*    <input*/}
-            {/*        type="text"*/}
-            {/*        ref={toRef}*/}
-            {/*    />*/}
-            {/*</label><br/>*/}
-            {/*<button*/}
-            {/*    disabled={isJoinDisable}*/}
-            {/*    onClick={joinMeet}*/}
-            {/*>Join*/}
-            {/*</button>*/}
-            {/*<button*/}
-            {/*    disabled={isDeleteDisable}*/}
-            {/*    onClick={deleteMeet}*/}
-            {/*>Delete*/}
-            {/*</button>*/}
         </section>
 
     )

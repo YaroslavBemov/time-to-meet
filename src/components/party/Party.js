@@ -48,24 +48,20 @@ const Party = () => {
                 {!party
                     ? null
                     : party.map(item => (
-                        <label
-                            className={styles.label}
-                            key={item.id}
+                        <label className={styles.label}
+                               key={item.id}
                         >
-                            <input
-                                className={styles.input}
-                                type="radio"
-                                id={item.title}
-                                name="party"
-                                value={item.id}
-                                checked={currentParty === item.id}
-                                onChange={handleChange}
+                            <input className={styles.input}
+                                   type="radio"
+                                   id={item.title}
+                                   name="party"
+                                   value={item.id}
+                                   checked={currentParty === item.id}
+                                   onChange={handleChange}
                             />
                             {item.title}
-                            <span
-                                className={styles.span}
-                            >
-                                <People className={styles.icon} />
+                            <span className={styles.span}>
+                                <People className={styles.icon}/>
                             </span>
                         </label>
                     ))}
