@@ -1,8 +1,7 @@
-import React, {useContext, useEffect, useState} from 'react'
-import {db} from '../../adapters/firebase'
-import {MainContext} from '../../contexts/MainContext'
+import React, { useContext, useEffect, useState } from 'react'
+import { db } from '../../adapters/firebase'
+import { MainContext } from '../../contexts/MainContext'
 import styles from './Meets.module.sass'
-import {ReactComponent as Plus} from '../../images/plus.svg'
 
 const Meets = () => {
     console.log('MEETS')
@@ -40,8 +39,8 @@ const Meets = () => {
                 Встречи
             </h1>
             <div className={styles.list}>
-                {!meets
-                    ? null
+                {meets.length === 0
+                  ? <div>No one meet.</div>
                     : meets.map(item => (
                         <label className={styles.label}
                                key={item.id}
