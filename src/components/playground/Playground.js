@@ -33,10 +33,31 @@ const Playground = () => {
       })
   }
 
+  function handleAddDoc() {
+    db.collection('party')
+      .add({data: 'test2'})
+      .then(res => {
+        console.log(res.id)
+        db.collection('party')
+          .doc(res.id)
+          .collection('members')
+          .add({data: 'test3'})
+          .then(data => {
+            console.log(data.id)
+          })
+      })
+
+    // db.collection('party')
+    //   .add({data: 'test1'})
+    //   .then(res => {
+    //     console.log(res.id)
+    //   })
+  }
+
   return (
     <div>
       <button
-        onClick={handleClick}
+        onClick={handleAddDoc}
       >Click
       </button>
 
