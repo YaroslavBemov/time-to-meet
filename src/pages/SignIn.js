@@ -3,7 +3,7 @@ import {useHistory} from 'react-router-dom'
 
 import {useAuth} from '../contexts/AuthContext'
 
-import {MEETS} from '../constants/routes'
+import {MAIN} from '../constants/routes'
 
 const SignIn = () => {
     const [loading, setLoading] = useState(false)
@@ -27,7 +27,7 @@ const SignIn = () => {
         signInWithEmailAndPassword(email, password)
             .then(() => {
                 setLoading(false)
-                history.push(MEETS)
+                history.push(MAIN)
             })
             .catch(error => {
                 setError(error.message)

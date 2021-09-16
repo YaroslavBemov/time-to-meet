@@ -4,7 +4,6 @@ import { MainContext } from '../../contexts/MainContext'
 import styles from './Meets.module.sass'
 
 const Meets = () => {
-    console.log('MEETS')
     const [meets, setMeets] = useState([])
     const {currentParty, currentMeet, setCurrentMeet} = useContext(MainContext)
 

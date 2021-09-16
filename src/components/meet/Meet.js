@@ -14,7 +14,6 @@ import styles from './Meet.module.sass'
 import Scale from '../scale/Scale'
 
 const Meet = () => {
-  console.log('MEET')
   const { currentUser } = useAuth()
   const { currentMeet } = useContext(MainContext)
   const [meet, setMeet] = useState([])

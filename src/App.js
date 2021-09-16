@@ -7,6 +7,7 @@ import SignUp from './pages/SignUp'
 import SignIn from './pages/SignIn'
 import ResetPassword from './pages/ResetPassword'
 import MainPage from './pages/MainPage'
+import NewParty from './pages/NewParty'
 
 // Components
 import NavBar from './components/nav/NavBar'
@@ -25,8 +26,9 @@ export default function App () {
         <Route path={ROUTE.SIGNUP} component={SignUp}/>
         <Route path={ROUTE.SIGNIN} component={SignIn}/>
         <Route path={ROUTE.RESET_PASSWORD} component={ResetPassword}/>
-        <Route to='/playground' component={Playground}/>
         <PrivateRoute path={ROUTE.MAIN} exact component={MainPage}/>
+        <PrivateRoute path={ROUTE.NEW_PARTY} exact component={NewParty}/>
+        <Route to='/playground' component={Playground}/>
         <Redirect to="/"/>
       </Switch>
     </BrowserRouter>

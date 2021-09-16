@@ -6,9 +6,10 @@ import { MainContext } from '../../contexts/MainContext'
 
 import styles from './Party.module.sass'
 import { ReactComponent as People } from '../../images/people.svg'
+import { Link } from 'react-router-dom'
+import { NEW_PARTY } from '../../constants/routes'
 
 const Party = () => {
-  console.log('PARTY')
   const {
     party, setParty,
     currentParty, setCurrentParty
@@ -22,24 +23,47 @@ const Party = () => {
     setCurrentParty(value)
   }
 
+  function handleAddPartyClick () {
+
+  }
+
   useEffect(() => {
     const unsubParty = db
       .collection('party')
-      .where('uids', 'array-contains', id)
-      .onSnapshot(snapshot => {
-        const list = snapshot.docs.map(doc => ({
-          id: doc.id,
-          title: doc.data().title
-        }))
-        setParty(list)
-        if (list.length > 0) {
-          setCurrentParty(list[0].id)
-        }
+      .get()
+      .then(documents => {
+        // const list = []
+        documents.forEach(document => {
+          db.collection('party')
+            .doc(document.id)
+            .collection('members')
+            .where('uid', '==', id)
+            .onSnapshot(snapshot => {
+              const list = snapshot.docs.map(doc => ({
+                id: doc.ref.parent.parent.id,
+                title: 'title'
+              }))
+
+              setParty(list)
+              // if (list.length > 0) {
+              //   setCurrentParty(list[0].id)
+              // }
+
+              // snapshot.docs.forEach((doc) => {
+              //
+              //   setParty(prev => [...prev, {
+              //     id: doc.ref.parent.parent.id,
+              //     title: 'title'
+              //   }])
+              // })
+            })
+        })
+
       })
 
-    return () => {
-      unsubParty()
-    }
+    // return () => {
+    //   unsubParty()
+    // }
   }, [id])
 
   return (
@@ -62,11 +86,12 @@ const Party = () => {
               />
               {item.title}
               <span className={styles.span}>
-                                <People className={styles.icon}/>
-                            </span>
+                   <People className={styles.icon}/>
+              </span>
             </label>
           ))}
       </div>
+      <Link to={NEW_PARTY}>Create party</Link>
     </section>
   )
 }
