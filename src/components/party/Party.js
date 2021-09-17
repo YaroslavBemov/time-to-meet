@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import { db } from '../../adapters/firebase'
 import { useAuth } from '../../contexts/AuthContext'
@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom'
 import { NEW_PARTY } from '../../constants/routes'
 
 const Party = () => {
+  const [listId, setListId] = useState([])
   const {
     party, setParty,
     currentParty, setCurrentParty
@@ -32,33 +33,35 @@ const Party = () => {
       .collection('party')
       .get()
       .then(documents => {
-        // const list = []
         documents.forEach(document => {
           db.collection('party')
             .doc(document.id)
             .collection('members')
             .where('uid', '==', id)
-            .onSnapshot(snapshot => {
-              const list = snapshot.docs.map(doc => ({
-                id: doc.ref.parent.parent.id,
-                title: 'title'
-              }))
-
-              setParty(list)
-              // if (list.length > 0) {
-              //   setCurrentParty(list[0].id)
-              // }
-
-              // snapshot.docs.forEach((doc) => {
-              //
-              //   setParty(prev => [...prev, {
-              //     id: doc.ref.parent.parent.id,
-              //     title: 'title'
-              //   }])
-              // })
+            .get()
+            .then(data => {
+              if (data.docs.length > 0) {
+                setListId(prevState => [...prevState, data.docs[0].id])
+              }
             })
         })
-
+      })
+      .then(() => {
+        if (listId.length > 0){
+          listId.forEach(id => {
+            console.log(id)
+            db.collection('party')
+              .doc(id)
+              .get()
+              .then((data) => {
+                console.log(data.data())
+                setParty(prev => [...prev, {
+                  id: id,
+                  // title: data.data().title
+                }])
+              })
+          })
+        }
       })
 
     // return () => {
