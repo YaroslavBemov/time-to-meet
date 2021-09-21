@@ -29,44 +29,19 @@ const Party = () => {
   }
 
   useEffect(() => {
-    const unsubParty = db
-      .collection('party')
-      .get()
-      .then(documents => {
-        documents.forEach(document => {
-          db.collection('party')
-            .doc(document.id)
-            .collection('members')
-            .where('uid', '==', id)
-            .get()
-            .then(data => {
-              if (data.docs.length > 0) {
-                setListId(prevState => [...prevState, data.docs[0].id])
-              }
-            })
+    const unsubParty = db.collectionGroup('members')
+      .where('uid', '==', id)
+      .onSnapshot(snapshot => {
+        const list = []
+        snapshot.forEach(doc => {
+          list.push(doc.ref.parent.parent.id)
         })
-      })
-      .then(() => {
-        if (listId.length > 0){
-          listId.forEach(id => {
-            console.log(id)
-            db.collection('party')
-              .doc(id)
-              .get()
-              .then((data) => {
-                console.log(data.data())
-                setParty(prev => [...prev, {
-                  id: id,
-                  // title: data.data().title
-                }])
-              })
-          })
-        }
+        setParty(list)
       })
 
-    // return () => {
-    //   unsubParty()
-    // }
+    return () => {
+      unsubParty()
+    }
   }, [id])
 
   return (

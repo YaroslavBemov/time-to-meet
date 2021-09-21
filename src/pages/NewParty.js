@@ -34,7 +34,7 @@ const NewParty = () => {
     db.collection('party')
       .add(docData)
       .then(res => {
-        console.log(res.id)
+        // console.log(res.id)
         db.collection('party')
           .doc(res.id)
           .collection('members')

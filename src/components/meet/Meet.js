@@ -27,7 +27,7 @@ const Meet = () => {
   let members = []
   //TODO fix button
   let isJoinDisable = false
-  console.log(`isJoinDisable = ${isJoinDisable}`)
+  // console.log(`isJoinDisable = ${isJoinDisable}`)
   let isDeleteDisable = true
 
   if (meet) {
