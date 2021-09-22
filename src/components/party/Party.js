@@ -29,20 +29,24 @@ const Party = () => {
   }
 
   useEffect(() => {
-    const unsubParty = db.collectionGroup('members')
-      .where('uid', '==', id)
-      .onSnapshot(snapshot => {
-        const list = []
-        snapshot.forEach(doc => {
-          list.push(doc.ref.parent.parent.id)
-        })
-        setParty(list)
-      })
+    async function getParty () {
+      const documents = await db.collectionGroup('members')
+        .where('uid', '==', id)
+        .get()
 
-    return () => {
-      unsubParty()
+      const partyList = []
+      for (let i = 0; i < documents.docs.length; i++) {
+        const doc = await documents.docs[i].ref.parent.parent.get()
+        const id = documents.docs[i].ref.parent.parent.id
+        const title = doc.data().title
+        partyList.push({ id, title })
+      }
+      setParty(partyList)
     }
-  }, [id])
+
+    getParty()
+
+  }, [])
 
   return (
     <section className="party">
