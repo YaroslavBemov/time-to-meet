@@ -162,7 +162,7 @@ const Meet = () => {
 
   return (
     <section className="meet">
-      {currentMeet === ''
+      {currentMeet === '' || currentMeet === undefined
         ? <div>No details.</div>
         : <>
           <div>

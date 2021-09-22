@@ -9,7 +9,7 @@ const NewParty = () => {
   const [disabled, setDisabled] = useState(true)
 
   const {
-    party, setParty,
+    party, setParty, getParty,
     currentParty, setCurrentParty
   } = useContext(MainContext)
 
@@ -34,32 +34,12 @@ const NewParty = () => {
     db.collection('party')
       .add(docData)
       .then(res => {
-        // console.log(res.id)
         db.collection('party')
           .doc(res.id)
           .collection('members')
           .add({ uid, name })
           .then(() => {
-            db.collection('party')
-              .get()
-              .then((documents) => {
-                documents.forEach((document) => {
-                  db.collection('party')
-                    .doc(document.id)
-                    .collection('members')
-                    .where('uid', '==', uid)
-                    .onSnapshot(snapshot => {
-                      const list = snapshot.docs.map(doc => ({
-                        id: doc.id,
-                        title: doc.data().title
-                      }))
-                      setParty(list)
-                      if (list.length > 0) {
-                        setCurrentParty(list[0].id)
-                      }
-                    })
-                })
-              })
+            getParty()
           })
       })
   }

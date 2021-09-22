@@ -23,6 +23,7 @@ const Meets = () => {
                         ...doc.data()
                     }))
                     setMeets(list)
+                  console.log(list[0]?.id)
                     setCurrentMeet(list[0]?.id)
                 })
 

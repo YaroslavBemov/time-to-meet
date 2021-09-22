@@ -1,7 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-
-import { db } from '../../adapters/firebase'
-import { useAuth } from '../../contexts/AuthContext'
 import { MainContext } from '../../contexts/MainContext'
 
 import styles from './Party.module.sass'
@@ -12,12 +9,9 @@ import { NEW_PARTY } from '../../constants/routes'
 const Party = () => {
   const [listId, setListId] = useState([])
   const {
-    party, setParty,
+    party, getParty,
     currentParty, setCurrentParty
   } = useContext(MainContext)
-  const { currentUser } = useAuth()
-
-  const id = currentUser.uid
 
   const handleChange = e => {
     const { value } = e.target
@@ -29,23 +23,7 @@ const Party = () => {
   }
 
   useEffect(() => {
-    async function getParty () {
-      const documents = await db.collectionGroup('members')
-        .where('uid', '==', id)
-        .get()
-
-      const partyList = []
-      for (let i = 0; i < documents.docs.length; i++) {
-        const doc = await documents.docs[i].ref.parent.parent.get()
-        const id = documents.docs[i].ref.parent.parent.id
-        const title = doc.data().title
-        partyList.push({ id, title })
-      }
-      setParty(partyList)
-    }
-
     getParty()
-
   }, [])
 
   return (
