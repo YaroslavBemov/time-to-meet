@@ -16,6 +16,7 @@ import Playground from './components/playground/Playground'
 // Routes
 import * as ROUTE from './constants/routes'
 import PrivateRoute from './components/PrivateRoute'
+import NewMeet from './pages/NewMeet'
 
 export default function App () {
   return (
@@ -28,6 +29,7 @@ export default function App () {
         <Route path={ROUTE.RESET_PASSWORD} component={ResetPassword}/>
         <PrivateRoute path={ROUTE.MAIN} exact component={MainPage}/>
         <PrivateRoute path={ROUTE.NEW_PARTY} exact component={NewParty}/>
+        <PrivateRoute path={ROUTE.NEW_MEET} exact component={NewMeet}/>
         <Route to='/playground' component={Playground}/>
         <Redirect to="/"/>
       </Switch>
