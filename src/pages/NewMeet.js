@@ -9,13 +9,14 @@ const NewMeet = () => {
   const { currentUser } = useAuth()
   const name = currentUser.displayName
 
-  const [disabled, setDisabled] = useState(true)
   const [title, setTitle] = useState('')
+  const [date, setDate] = useState('')
   const [forParty, setForParty] = useState(() => {
     if (party.length !== 0) {
      return party[0].id
     }
   })
+  const [disabled, setDisabled] = useState(true)
 
   function handleChangeTitle (e) {
     const { value } = e.target
@@ -26,29 +27,33 @@ const NewMeet = () => {
 
   function handleCreateMeet () {
     const docData = {
-      title: 'Meet title',
-      date: '2021-10-01',
-      from: '13',
-      to: '18',
-      description: 'Test meet',
+      title,
+      date,
+      from: '10',
+      to: '22',
+      description: 'Test meet 3',
       owner: name
     }
 
-    console.log(title)
     console.log(forParty)
+    console.log(title)
+    console.log(date)
 
-    db.collection('party')
-      .doc(forParty)
-      .collection('meets')
-      .add(docData)
-      .then(() => {
-        console.log('Document successfully written!')
-      })
+    // db.collection('party')
+    //   .doc(forParty)
+    //   .collection('meets')
+    //   .add(docData)
+    //   .then(() => {
+    //     console.log('Document successfully written!')
+    //   })
   }
 
   function handleForPartyChange (e) {
     setForParty(e.target.value)
-    console.log(forParty)
+  }
+
+  function handleDateChange (e) {
+    setDate(e.target.value)
   }
 
   return (
@@ -56,7 +61,10 @@ const NewMeet = () => {
       <Party/>
       <section className="new-party">
         <h1>New meet</h1>
-        <input type="text" value={title} onChange={handleChangeTitle} placeholder="Meet title"/><br/>
+        <input type="text"
+               value={title}
+               onChange={handleChangeTitle}
+               placeholder="Meet title"/><br/>
         <label>Choose party
           <select value={forParty} onChange={handleForPartyChange}>
             {party.length === 0
@@ -67,7 +75,9 @@ const NewMeet = () => {
           </select>
         </label><br/>
         <label>Choose date
-          <input type="date"/>
+          <input type="date"
+          value={date}
+          onChange={handleDateChange}/>
         </label><br/>
         <label>Choose time
           <input type="text"/>

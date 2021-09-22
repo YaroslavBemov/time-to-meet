@@ -15,7 +15,7 @@ import Scale from '../scale/Scale'
 
 const Meet = () => {
   const { currentUser } = useAuth()
-  const { currentMeet } = useContext(MainContext)
+  const { currentMeet, currentParty } = useContext(MainContext)
   const [meet, setMeet] = useState([])
 
   const fromRef = useRef()
@@ -120,6 +120,8 @@ const Meet = () => {
   useEffect(() => {
     if (currentMeet) {
       const unsubscribeMeet = db
+        .collection('party')
+        .doc(currentParty)
         .collection('meets')
         .doc(currentMeet)
         .onSnapshot(doc => {
@@ -168,7 +170,7 @@ const Meet = () => {
           <div>
             <p className={styles.title}>
               Встречу создал: <span
-              className={styles.text}>{meet && meet.name}</span>
+              className={styles.text}>{meet && meet.owner}</span>
             </p>
             <p className={styles.title}>
               Когда: <span className={styles.text}>{meet && meet.date}</span>

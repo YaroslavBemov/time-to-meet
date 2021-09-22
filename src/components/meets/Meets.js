@@ -17,15 +17,16 @@ const Meets = () => {
   useEffect(() => {
     if (currentParty) {
       const unsubMeets = db
+        .collection('party')
+        .doc(currentParty)
         .collection('meets')
-        .where('party', '==', currentParty)
         .onSnapshot(snapshot => {
           const list = snapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
           }))
           setMeets(list)
-          console.log(list[0]?.id)
+          // console.log(list[0]?.id)
           setCurrentMeet(list[0]?.id)
         })
 
