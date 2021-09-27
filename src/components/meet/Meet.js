@@ -118,7 +118,8 @@ const Meet = () => {
   }
 
   useEffect(() => {
-    if (currentMeet) {
+    console.log(currentMeet)
+    if (currentMeet !== '') {
       const unsubscribeMeet = db
         .collection('party')
         .doc(currentParty)
@@ -136,14 +137,14 @@ const Meet = () => {
 
   }, [currentMeet])
 
-  const value = {
-    from: meet.from,
-    to: meet.to,
-    total: {
-      from: total.from,
-      to: total.to
+    const value = {
+      from: meet.length > 0 ? meet.from : null,
+      to: meet.length > 0 ? meet.to : null,
+      total: {
+        from: total.from,
+        to: total.to
+      }
     }
-  }
 
   let optionsFrom = [],
     optionsTo = []

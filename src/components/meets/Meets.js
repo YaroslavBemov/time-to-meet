@@ -15,7 +15,7 @@ const Meets = () => {
   }
 
   useEffect(() => {
-    if (currentParty) {
+    if (currentParty !== '') {
       const unsubMeets = db
         .collection('party')
         .doc(currentParty)
@@ -26,8 +26,9 @@ const Meets = () => {
             ...doc.data()
           }))
           setMeets(list)
-          // console.log(list[0]?.id)
-          setCurrentMeet(list[0]?.id)
+          if (list.length > 0) {
+            setCurrentMeet(list[0]?.id)
+          }
         })
 
       return () => {
