@@ -19,6 +19,7 @@ const Party = () => {
   const handleChange = e => {
     const { value } = e.target
     setCurrentParty(value)
+    setCurrentMeet('')
     history.push('/main')
   }
 
