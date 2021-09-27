@@ -15,8 +15,8 @@ import Scale from '../scale/Scale'
 
 const Meet = () => {
   const { currentUser } = useAuth()
-  const { currentMeet, currentParty } = useContext(MainContext)
-  const [meet, setMeet] = useState([])
+  const { currentMeet, currentParty, meet, getMeet } = useContext(MainContext)
+  // const [meet, setMeet] = useState([])
 
   const fromRef = useRef()
   const toRef = useRef()
@@ -118,33 +118,17 @@ const Meet = () => {
   }
 
   useEffect(() => {
-    console.log(currentMeet)
-    if (currentMeet !== '') {
-      const unsubscribeMeet = db
-        .collection('party')
-        .doc(currentParty)
-        .collection('meets')
-        .doc(currentMeet)
-        .onSnapshot(doc => {
-          const data = doc.data()
-          setMeet(data)
-        })
-
-      return () => {
-        unsubscribeMeet()
-      }
-    }
-
+    getMeet()
   }, [currentMeet])
 
-    const value = {
-      from: meet.length > 0 ? meet.from : null,
-      to: meet.length > 0 ? meet.to : null,
-      total: {
-        from: total.from,
-        to: total.to
-      }
+  const value = {
+    from: meet.from,
+    to: meet.to,
+    total: {
+      from: total.from,
+      to: total.to
     }
+  }
 
   let optionsFrom = [],
     optionsTo = []

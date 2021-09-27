@@ -32,9 +32,9 @@ const NewMeet = () => {
     const docData = {
       title,
       date,
-      from: '10',
-      to: '22',
-      description: 'Test meet 3',
+      from,
+      to,
+      description,
       owner: name
     }
     createMeet(partyId, docData)
