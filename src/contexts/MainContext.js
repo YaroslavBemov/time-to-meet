@@ -7,11 +7,13 @@ export const MainContext = createContext({})
 export function MainProvider ({ children }) {
   const [party, setParty] = useState([])
   const [meets, setMeets] = useState([])
+  const [meet, setMeet] = useState({})
   const [currentParty, setCurrentParty] = useState('')
   const [currentMeet, setCurrentMeet] = useState('')
 
   const { currentUser } = useAuth()
   const id = currentUser.uid
+  // const name = currentUser.displayName
 
   const getParty = async () => {
     const documents = await db.collectionGroup('members')
@@ -132,10 +134,25 @@ export function MainProvider ({ children }) {
     }
   }
 
+  const getMeet = async () => {
+    if (currentMeet !== '') {
+      await db.collection('party')
+        .doc(currentParty)
+        .collection('meets')
+        .doc(currentMeet)
+        .onSnapshot(doc => {
+          const data = doc.data()
+          console.log(data)
+          setMeet(data)
+        })
+    }
+  }
+
   const value = {
     party, setParty, getParty, createParty, deleteParty,
     currentParty, setCurrentParty,
-    currentMeet, setCurrentMeet, meets, getMeets, createMeet
+    currentMeet, setCurrentMeet, meets, getMeets, createMeet,
+    meet, getMeet
   }
 
   return (
