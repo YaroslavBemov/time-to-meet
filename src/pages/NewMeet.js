@@ -37,15 +37,6 @@ const NewMeet = () => {
       description: 'Test meet 3',
       owner: name
     }
-
-    console.log('partyId ' + partyId)
-    console.log('title ' + title)
-    console.log('date ' + date)
-    console.log('from ' + from)
-    console.log('to ' + to)
-    console.log('description ' + description)
-    console.log('name ' + name)
-
     createMeet(partyId, docData)
   }
 

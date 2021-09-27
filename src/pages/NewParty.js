@@ -9,7 +9,7 @@ const NewParty = () => {
   const [disabled, setDisabled] = useState(true)
 
   const {
-    party, setParty, getParty,
+    party, setParty, getParty, createParty,
     currentParty, setCurrentParty
   } = useContext(MainContext)
 
@@ -24,23 +24,9 @@ const NewParty = () => {
   }
 
   function handleCreateParty () {
-    const docData = {
-      title,
-      owner: {
-        uid,
-        name
-      }
-    }
-    db.collection('party')
-      .add(docData)
-      .then(res => {
-        db.collection('party')
-          .doc(res.id)
-          .collection('members')
-          .add({ uid, name })
-          .then(() => {
-            getParty()
-          })
+    createParty(uid, name, title)
+      .then(() => {
+        getParty()
       })
   }
 

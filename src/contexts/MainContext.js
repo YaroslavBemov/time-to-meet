@@ -29,6 +29,25 @@ export function MainProvider ({ children }) {
     setParty(partyList)
   }
 
+  const createParty = async (uid, name, title) => {
+    const docData = {
+      title,
+      owner: {
+        uid,
+        name
+      }
+    }
+
+    await db.collection('party')
+      .add(docData)
+      .then(res => {
+        db.collection('party')
+          .doc(res.id)
+          .collection('members')
+          .add({ uid, name })
+      })
+  }
+
   const deleteParty = async (id) => {
     const members = await db.collection('party')
       .doc(id)
@@ -93,8 +112,10 @@ export function MainProvider ({ children }) {
       })
   }
 
+
+
   const value = {
-    party, setParty, getParty, deleteParty,
+    party, setParty, getParty, createParty, deleteParty,
     currentParty, setCurrentParty,
     currentMeet, setCurrentMeet, createMeet
   }
