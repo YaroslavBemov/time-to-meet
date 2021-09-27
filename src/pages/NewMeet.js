@@ -5,17 +5,20 @@ import { db } from '../adapters/firebase'
 import { useAuth } from '../contexts/AuthContext'
 
 const NewMeet = () => {
-  const { party } = useContext(MainContext)
+  const { party, createMeet } = useContext(MainContext)
   const { currentUser } = useAuth()
   const name = currentUser.displayName
 
-  const [title, setTitle] = useState('')
-  const [date, setDate] = useState('')
-  const [forParty, setForParty] = useState(() => {
+  const [partyId, setPartyId] = useState(() => {
     if (party.length !== 0) {
      return party[0].id
     }
   })
+  const [title, setTitle] = useState('')
+  const [date, setDate] = useState('')
+  const [description, setDescription] = useState('')
+  const [from, setFrom] = useState('')
+  const [to, setTo] = useState('')
   const [disabled, setDisabled] = useState(true)
 
   function handleChangeTitle (e) {
@@ -35,25 +38,35 @@ const NewMeet = () => {
       owner: name
     }
 
-    console.log(forParty)
-    console.log(title)
-    console.log(date)
+    console.log('partyId ' + partyId)
+    console.log('title ' + title)
+    console.log('date ' + date)
+    console.log('from ' + from)
+    console.log('to ' + to)
+    console.log('description ' + description)
+    console.log('name ' + name)
 
-    // db.collection('party')
-    //   .doc(forParty)
-    //   .collection('meets')
-    //   .add(docData)
-    //   .then(() => {
-    //     console.log('Document successfully written!')
-    //   })
+    createMeet(partyId, docData)
   }
 
   function handleForPartyChange (e) {
-    setForParty(e.target.value)
+    setPartyId(e.target.value)
   }
 
   function handleDateChange (e) {
     setDate(e.target.value)
+  }
+
+  function handleChangeDesc (e) {
+    setDescription(e.target.value)
+  }
+
+  function handleChangeFrom (e) {
+    setFrom(e.target.value)
+  }
+
+  function handleChangeTo (e) {
+    setTo(e.target.value)
   }
 
   return (
@@ -66,7 +79,7 @@ const NewMeet = () => {
                onChange={handleChangeTitle}
                placeholder="Meet title"/><br/>
         <label>Choose party
-          <select value={forParty} onChange={handleForPartyChange}>
+          <select value={partyId} onChange={handleForPartyChange}>
             {party.length === 0
             ? <option disabled={true}>No parties</option>
             : party.map(item => (
@@ -80,11 +93,20 @@ const NewMeet = () => {
           onChange={handleDateChange}/>
         </label><br/>
         <label>Choose time
-          <input type="text"/>
-          <input type="text"/>
+          <input
+            value={from}
+            onChange={handleChangeFrom}
+            type="text"/>
+          <input
+            value={to}
+            onChange={handleChangeTo}
+            type="text"/>
         </label><br/>
         <label>
-          <textarea placeholder="Comment"/>
+          <textarea
+            value={description}
+            onChange={handleChangeDesc}
+            placeholder="Comment"/>
         </label><br/>
         <button onClick={handleCreateMeet} disabled={disabled}>Create meet</button>
       </section>

@@ -80,10 +80,23 @@ export function MainProvider ({ children }) {
       })
   }
 
+  const createMeet = async (partyId, docData) => {
+    await db.collection('party')
+      .doc(partyId)
+      .collection('meets')
+      .add(docData)
+      .then(() => {
+        console.log('Document successfully written!')
+      })
+      .catch((error) => {
+        console.error('Error written document: ', error)
+      })
+  }
+
   const value = {
     party, setParty, getParty, deleteParty,
     currentParty, setCurrentParty,
-    currentMeet, setCurrentMeet
+    currentMeet, setCurrentMeet, createMeet
   }
 
   return (
