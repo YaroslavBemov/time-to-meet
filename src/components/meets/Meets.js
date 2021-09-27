@@ -6,8 +6,14 @@ import { NEW_MEET, NEW_PARTY } from '../../constants/routes'
 import { Link } from 'react-router-dom'
 
 const Meets = () => {
-  const [meets, setMeets] = useState([])
-  const { currentParty, currentMeet, setCurrentMeet } = useContext(MainContext)
+  // const [meets, setMeets] = useState([])
+  const {
+    currentParty,
+    currentMeet,
+    setCurrentMeet,
+    meets,
+    getMeets
+  } = useContext(MainContext)
 
   const handleChange = e => {
     const { value } = e.target
@@ -15,26 +21,7 @@ const Meets = () => {
   }
 
   useEffect(() => {
-    if (currentParty !== '') {
-      const unsubMeets = db
-        .collection('party')
-        .doc(currentParty)
-        .collection('meets')
-        .onSnapshot(snapshot => {
-          const list = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-          }))
-          setMeets(list)
-          if (list.length > 0) {
-            setCurrentMeet(list[0]?.id)
-          }
-        })
-
-      return () => {
-        unsubMeets()
-      }
-    }
+    getMeets()
   }, [currentParty])
 
   return (
