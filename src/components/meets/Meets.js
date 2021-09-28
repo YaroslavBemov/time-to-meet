@@ -1,18 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { db } from '../../adapters/firebase'
+import React, { useContext, useEffect } from 'react'
 import { MainContext } from '../../contexts/MainContext'
 import styles from './Meets.module.sass'
-import { NEW_MEET, NEW_PARTY } from '../../constants/routes'
+import { NEW_MEET } from '../../constants/routes'
 import { Link } from 'react-router-dom'
 
 const Meets = () => {
-  // const [meets, setMeets] = useState([])
   const {
+    meets, getMeets,
     currentParty,
-    currentMeet,
-    setCurrentMeet,
-    meets,
-    getMeets
+    currentMeet, setCurrentMeet,
   } = useContext(MainContext)
 
   const handleChange = e => {

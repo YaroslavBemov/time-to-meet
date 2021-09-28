@@ -7,6 +7,7 @@ export const MainContext = createContext({})
 export function MainProvider ({ children }) {
   const [party, setParty] = useState([])
   const [meets, setMeets] = useState([])
+  const [meet, setMeet] = useState({})
   const [currentParty, setCurrentParty] = useState('')
   const [currentMeet, setCurrentMeet] = useState('')
 
@@ -128,14 +129,31 @@ export function MainProvider ({ children }) {
             setCurrentMeet(list[0]?.id)
           }
         })
-
     }
   }
 
+  const getMeet = async () => {
+    if (currentMeet !== '') {
+      await db.collection('party')
+        .doc(currentParty)
+        .collection('meets')
+        .onSnapshot(snapshot => {
+          const item = snapshot.docs.filter(it => it.id === currentMeet)
+          setMeet(item[0].data())
+        })
+    }
+  }
+
+  const deleteMeet = async () => {
+
+  }
+
   const value = {
-    party, setParty, getParty, createParty, deleteParty,
+    party, getParty, createParty, deleteParty,
+    meets, getMeets,
+    meet, getMeet, createMeet, deleteMeet,
     currentParty, setCurrentParty,
-    currentMeet, setCurrentMeet, meets, getMeets, createMeet
+    currentMeet, setCurrentMeet
   }
 
   return (

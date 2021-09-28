@@ -7,8 +7,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { NEW_PARTY } from '../../constants/routes'
 
 const Party = () => {
-  const [listId, setListId] = useState([])
-  const [isOwner, setIsOwner] = useState(false)
+  // const [isOwner, setIsOwner] = useState(false)
   const {
     party, getParty, deleteParty,
     currentParty, setCurrentParty,
