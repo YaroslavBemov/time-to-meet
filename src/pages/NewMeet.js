@@ -3,11 +3,14 @@ import Party from '../components/party/Party'
 import { MainContext } from '../contexts/MainContext'
 import { db } from '../adapters/firebase'
 import { useAuth } from '../contexts/AuthContext'
+import { MAIN } from '../constants/routes'
+import { useHistory } from 'react-router-dom'
 
 const NewMeet = () => {
   const { party, createMeet } = useContext(MainContext)
   const { currentUser } = useAuth()
   const name = currentUser.displayName
+  const history = useHistory()
 
   const [partyId, setPartyId] = useState(() => {
     if (party.length !== 0) {
@@ -38,6 +41,9 @@ const NewMeet = () => {
       owner: name
     }
     createMeet(partyId, docData)
+      .then(() => {
+        history.push(MAIN)
+      })
   }
 
   function handleForPartyChange (e) {

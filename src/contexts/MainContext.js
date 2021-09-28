@@ -109,6 +109,9 @@ export function MainProvider ({ children }) {
       .doc(partyId)
       .collection('meets')
       .add(docData)
+      .then((docRef) => {
+        setCurrentMeet(docRef.id)
+      })
       .then(() => {
         console.log('Document successfully written!')
       })
@@ -128,7 +131,7 @@ export function MainProvider ({ children }) {
             ...doc.data()
           }))
           setMeets(list)
-          if (list.length > 0) {
+          if (currentMeet === '' && list.length > 0) {
             setCurrentMeet(list[0]?.id)
           }
         })
@@ -162,10 +165,7 @@ export function MainProvider ({ children }) {
       })
   }
 
-  const joinMeet = (from, to) => {
-    // const uid = currentUser.uid
-    // const name = currentUser.displayName
-
+  const joinMeet = async (from, to) => {
     //V9
     // const meetRef = doc(db, 'meets', id);
     //
@@ -178,7 +178,7 @@ export function MainProvider ({ children }) {
     //     })
     // })
 
-    db.collection('party')
+   await db.collection('party')
       .doc(currentParty)
       .collection('meets')
       .doc(currentMeet)

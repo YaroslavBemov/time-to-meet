@@ -15,7 +15,15 @@ import Scale from '../scale/Scale'
 
 const Meet = () => {
   const { currentUser } = useAuth()
-  const { currentMeet, currentParty, meet, getMeet, joinMeet, setCurrentMeet, deleteMeet } = useContext(MainContext)
+  const {
+    currentMeet,
+    currentParty,
+    meet,
+    getMeet,
+    joinMeet,
+    setCurrentMeet,
+    deleteMeet
+  } = useContext(MainContext)
   // const [meet, setMeet] = useState([])
 
   const fromRef = useRef()
@@ -105,6 +113,9 @@ const Meet = () => {
     const to = toRef.current.value
 
     joinMeet(from, to)
+      .then(() => {
+        getMeet()
+      })
 
     fromRef.current.value = ''
     toRef.current.value = ''
