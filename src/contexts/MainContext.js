@@ -2,6 +2,7 @@ import { createContext, useState } from 'react'
 import { db } from '../adapters/firebase'
 import { useAuth } from './AuthContext'
 import { MEETS } from '../constants/routes'
+import firebase from 'firebase'
 
 export const MainContext = createContext({})
 
@@ -14,6 +15,7 @@ export function MainProvider ({ children }) {
 
   const { currentUser } = useAuth()
   const id = currentUser.uid
+  const name = currentUser.displayName
 
   const getParty = async () => {
     const documents = await db.collectionGroup('members')
@@ -160,10 +162,46 @@ export function MainProvider ({ children }) {
       })
   }
 
+  const joinMeet = (from, to) => {
+    // const uid = currentUser.uid
+    // const name = currentUser.displayName
+
+    //V9
+    // const meetRef = doc(db, 'meets', id);
+    //
+    // await updateDoc(meetRef, {
+    //     members: arrayUnion({
+    //         uid: uid,
+    //         name: name,
+    //         from: from,
+    //         to: to
+    //     })
+    // })
+
+    db.collection('party')
+      .doc(currentParty)
+      .collection('meets')
+      .doc(currentMeet)
+      .update({
+        members: firebase.firestore.FieldValue.arrayUnion({
+          uid: id,
+          name: name,
+          from: from,
+          to: to
+        })
+      })
+      .then(() => {
+        console.log('Document successfully updated!')
+      })
+      .catch(error => {
+        console.log(error.message)
+      })
+  }
+
   const value = {
     party, getParty, createParty, deleteParty,
     meets, getMeets,
-    meet, getMeet, createMeet, deleteMeet,
+    meet, getMeet, createMeet, joinMeet, deleteMeet,
     currentParty, setCurrentParty,
     currentMeet, setCurrentMeet
   }

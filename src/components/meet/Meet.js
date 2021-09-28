@@ -15,7 +15,7 @@ import Scale from '../scale/Scale'
 
 const Meet = () => {
   const { currentUser } = useAuth()
-  const { currentMeet, currentParty, meet, getMeet, setCurrentMeet, deleteMeet } = useContext(MainContext)
+  const { currentMeet, currentParty, meet, getMeet, joinMeet, setCurrentMeet, deleteMeet } = useContext(MainContext)
   // const [meet, setMeet] = useState([])
 
   const fromRef = useRef()
@@ -54,47 +54,6 @@ const Meet = () => {
       console.log(`isJoinDisable = ${isJoinDisable}`)
     }
   }
-
-  const joinMeet = () => {
-    const uid = currentUser.uid
-    const name = currentUser.displayName
-    const from = fromRef.current.value
-    const to = toRef.current.value
-
-    //V9
-    // const meetRef = doc(db, 'meets', id);
-    //
-    // await updateDoc(meetRef, {
-    //     members: arrayUnion({
-    //         uid: uid,
-    //         name: name,
-    //         from: from,
-    //         to: to
-    //     })
-    // })
-
-    db.collection('meets')
-      .doc(currentMeet)
-      .update({
-        members: firebase.firestore.FieldValue.arrayUnion({
-          uid: uid,
-          name: name,
-          from: from,
-          to: to
-        })
-      })
-      .then(() => {
-        console.log('Document successfully updated!')
-      })
-      .catch(error => {
-        console.log(error.message)
-      })
-
-    // fromRef.current.value = ''
-    // toRef.current.value = ''
-  }
-
-
 
   const selectHandleFrom = (e) => {
     fromRef.current.value = e.target.value
@@ -139,6 +98,16 @@ const Meet = () => {
   function handleDelete () {
     setCurrentMeet('')
     deleteMeet(currentMeet)
+  }
+
+  function handleJoinMeet () {
+    const from = fromRef.current.value
+    const to = toRef.current.value
+
+    joinMeet(from, to)
+
+    fromRef.current.value = ''
+    toRef.current.value = ''
   }
 
   return (
@@ -191,7 +160,7 @@ const Meet = () => {
                 ))}
               </select>
               <button className={styles.vote}
-                      onClick={joinMeet}
+                      onClick={handleJoinMeet}
                       disabled={isJoinDisable}
               >
                 Голосовать
