@@ -15,7 +15,7 @@ import Scale from '../scale/Scale'
 
 const Meet = () => {
   const { currentUser } = useAuth()
-  const { currentMeet, currentParty, meet, getMeet } = useContext(MainContext)
+  const { currentMeet, currentParty, meet, getMeet, setCurrentMeet, deleteMeet } = useContext(MainContext)
   // const [meet, setMeet] = useState([])
 
   const fromRef = useRef()
@@ -94,18 +94,7 @@ const Meet = () => {
     // toRef.current.value = ''
   }
 
-  const deleteMeet = () => {
-    db.collection('meets')
-      .doc(currentMeet)
-      .delete()
-      .then(() => {
-        console.log('Document successfully deleted!')
-        history.push(MEETS)
-      })
-      .catch(error => {
-        console.log(error.message)
-      })
-  }
+
 
   const selectHandleFrom = (e) => {
     fromRef.current.value = e.target.value
@@ -147,6 +136,11 @@ const Meet = () => {
     })
   }
 
+  function handleDelete () {
+    setCurrentMeet('')
+    deleteMeet(currentMeet)
+  }
+
   return (
     <section className="meet">
       {currentMeet === '' || currentMeet === undefined
@@ -156,6 +150,13 @@ const Meet = () => {
             <p className={styles.title}>
               Встречу создал: <span
               className={styles.text}>{meet && meet.owner}</span>
+              <span
+                onClick={handleDelete}
+                className={styles.delete}
+                // style={isOwner ? {display: 'block'} : {display: 'none'}}
+              >
+                X
+              </span>
             </p>
             <p className={styles.title}>
               Когда: <span className={styles.text}>{meet && meet.date}</span>

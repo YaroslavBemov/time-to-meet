@@ -4,7 +4,7 @@ import { MainContext } from '../../contexts/MainContext'
 import styles from './Party.module.sass'
 import { ReactComponent as People } from '../../images/people.svg'
 import { Link, useHistory } from 'react-router-dom'
-import { NEW_PARTY } from '../../constants/routes'
+import { MEETS, NEW_PARTY } from '../../constants/routes'
 
 const Party = () => {
   // const [isOwner, setIsOwner] = useState(false)
@@ -32,6 +32,9 @@ const Party = () => {
     setCurrentParty('')
     setCurrentMeet('')
     deleteParty(id)
+      .then(() => {
+        history.push(MEETS)
+      })
       .then(() => {
       getParty()
     })

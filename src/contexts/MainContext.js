@@ -1,6 +1,7 @@
 import { createContext, useState } from 'react'
 import { db } from '../adapters/firebase'
 import { useAuth } from './AuthContext'
+import { MEETS } from '../constants/routes'
 
 export const MainContext = createContext({})
 
@@ -134,18 +135,29 @@ export function MainProvider ({ children }) {
 
   const getMeet = async () => {
     if (currentMeet !== '') {
-      await db.collection('party')
+      const documents = await db.collection('party')
         .doc(currentParty)
         .collection('meets')
-        .onSnapshot(snapshot => {
-          const item = snapshot.docs.filter(it => it.id === currentMeet)
-          setMeet(item[0].data())
-        })
+        .get()
+
+      const document = documents.docs.filter(it => it.id === currentMeet)
+      const data = await document[0].data()
+      setMeet(data)
     }
   }
 
-  const deleteMeet = async () => {
-
+  const deleteMeet = (id) => {
+    db.collection('party')
+      .doc(currentParty)
+      .collection('meets')
+      .doc(id)
+      .delete()
+      .then(() => {
+        console.log('Document successfully deleted! ' + id)
+      })
+      .catch((error) => {
+        console.error('Error removing document: ', error)
+      })
   }
 
   const value = {
