@@ -50,6 +50,7 @@ export function MainProvider ({ children }) {
           .doc(res.id)
           .collection('members')
           .add({ uid, name })
+        // setCurrentParty(res.id)
       })
   }
 
@@ -104,8 +105,8 @@ export function MainProvider ({ children }) {
       })
   }
 
-  const createMeet = async (partyId, docData) => {
-    await db.collection('party')
+  const createMeet = (partyId, docData) => {
+    db.collection('party')
       .doc(partyId)
       .collection('meets')
       .add(docData)
@@ -120,9 +121,9 @@ export function MainProvider ({ children }) {
       })
   }
 
-  const getMeets = async () => {
+  const getMeets = () => {
     if (currentParty !== '') {
-      await db.collection('party')
+      db.collection('party')
         .doc(currentParty)
         .collection('meets')
         .onSnapshot(snapshot => {
@@ -132,23 +133,23 @@ export function MainProvider ({ children }) {
           }))
           setMeets(list)
           if (currentMeet === '' && list.length > 0) {
-            console.log(list[0]?.id)
             setCurrentMeet(list[0]?.id)
           }
         })
     }
   }
 
-  const getMeet = async () => {
+  const getMeet = () => {
     if (currentMeet !== '') {
-      const documents = await db.collection('party')
+      db.collection('party')
         .doc(currentParty)
         .collection('meets')
-        .get()
-
-      const document = documents.docs.filter(it => it.id === currentMeet)
-      const data = await document[0].data()
-      setMeet(data)
+        .onSnapshot(snapshot => {
+          const document = snapshot.docs.filter(it => it.id === currentMeet)
+          if (document.length > 0) {
+            setMeet(document[0].data())
+          }
+        })
     }
   }
 
@@ -166,7 +167,7 @@ export function MainProvider ({ children }) {
       })
   }
 
-  const joinMeet = async (from, to) => {
+  const joinMeet = (from, to) => {
     //V9
     // const meetRef = doc(db, 'meets', id);
     //
@@ -179,7 +180,7 @@ export function MainProvider ({ children }) {
     //     })
     // })
 
-   await db.collection('party')
+    db.collection('party')
       .doc(currentParty)
       .collection('meets')
       .doc(currentMeet)
@@ -201,7 +202,7 @@ export function MainProvider ({ children }) {
 
   const value = {
     party, getParty, createParty, deleteParty,
-    meets, getMeets,
+    meets, getMeets, setMeets,
     meet, getMeet, createMeet, joinMeet, deleteMeet,
     currentParty, setCurrentParty,
     currentMeet, setCurrentMeet

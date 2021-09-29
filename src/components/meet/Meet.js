@@ -35,47 +35,6 @@ const Meet = () => {
 
   const history = useHistory()
 
-  // let total = {}
-  // let members = []
-  //TODO fix button
-  // let isJoinDisable = false
-  // console.log(`isJoinDisable = ${isJoinDisable}`)
-  // let isDeleteDisable = true
-
-  useEffect(() => {
-    getMeet()
-      .then(() => {
-        // if (meet) {
-        console.log(meet)
-          setTotal({
-            from: meet.from,
-            to: meet.to
-          })
-
-          if (+total.from > +total.to) {
-            [total.from, total.to] = [total.to, total.from]
-          }
-
-          // setIsDeleteDisable(meet.uid !== currentUser.uid)
-          if (meet.members) {
-            setMembers(meet.members)
-            const count = members.length
-            let tot = total
-
-            for (let i = 0; i < count; i++) {
-              // setTotal(compareRange(total, members[i]))
-              tot = compareRange(total, members[i])
-            }
-
-            setTotal(tot)
-            setIsJoinDisable(!!members.find(member => member.uid === currentUser.uid))
-            // setIsJoinDisable(true)
-            // console.log(`isJoinDisable = ${isJoinDisable}`)
-          }
-        // }
-      })
-  }, [currentMeet])
-
   const value = {
     from: meet.from,
     to: meet.to,
@@ -117,10 +76,39 @@ const Meet = () => {
 
   function handleJoinMeet () {
     joinMeet(from, to)
-      .then(() => {
-        getMeet()
-      })
   }
+
+  useEffect(() => {
+    console.log(meet)
+    getMeet()
+    console.log(meet)
+
+    setTotal({
+      from: meet.from,
+      to: meet.to
+    })
+
+    if (+total.from > +total.to) {
+      [total.from, total.to] = [total.to, total.from]
+    }
+
+    // setIsDeleteDisable(meet.uid !== currentUser.uid)
+    if (meet.members) {
+      setMembers(meet.members)
+      const count = members.length
+      let tot = total
+
+      for (let i = 0; i < count; i++) {
+        // setTotal(compareRange(total, members[i]))
+        tot = compareRange(total, members[i])
+      }
+
+      // setTotal(tot)
+      // setIsJoinDisable(!!members.find(member => member.uid === currentUser.uid))
+      // setIsJoinDisable(true)
+      // console.log(`isJoinDisable = ${isJoinDisable}`)
+    }
+  }, [currentMeet])
 
   return (
     <section className="meet">

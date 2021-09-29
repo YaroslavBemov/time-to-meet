@@ -41,9 +41,9 @@ const NewMeet = () => {
       owner: name
     }
     createMeet(partyId, docData)
-      .then(() => {
+      // .then(() => {
         history.push(MAIN)
-      })
+      // })
   }
 
   function handleForPartyChange (e) {
