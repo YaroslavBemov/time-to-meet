@@ -22,10 +22,6 @@ const Party = () => {
     history.push('/main')
   }
 
-  function handleAddPartyClick () {
-
-  }
-
   function handleDelete (e) {
     e.preventDefault()
     const id = e.target.parentNode.firstChild.value
@@ -76,7 +72,7 @@ const Party = () => {
             </label>
           ))}
       </div>
-      <Link to={NEW_PARTY}>Create party</Link>
+      <Link style={{color: 'white'}} to={NEW_PARTY}>Create party</Link>
     </section>
   )
 }

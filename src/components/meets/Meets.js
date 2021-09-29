@@ -45,7 +45,7 @@ const Meets = () => {
             </label>
           ))}
       </div>
-      <Link to={NEW_MEET}>Create meet</Link>
+      <Link style={{color: 'white'}} to={NEW_MEET}>Create meet</Link>
     </section>
 
   )

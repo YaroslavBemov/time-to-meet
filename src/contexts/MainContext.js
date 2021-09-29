@@ -132,6 +132,7 @@ export function MainProvider ({ children }) {
           }))
           setMeets(list)
           if (currentMeet === '' && list.length > 0) {
+            console.log(list[0]?.id)
             setCurrentMeet(list[0]?.id)
           }
         })

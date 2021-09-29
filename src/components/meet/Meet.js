@@ -26,55 +26,54 @@ const Meet = () => {
   } = useContext(MainContext)
   // const [meet, setMeet] = useState([])
 
-  const fromRef = useRef()
-  const toRef = useRef()
+  const [from, setFrom] = useState('')
+  const [to, setTo] = useState('')
+  const [isJoinDisable, setIsJoinDisable] = useState(false)
+  // const [isDeleteDisable, setIsDeleteDisable] = useState(false)
+  const [total, setTotal] = useState({})
+  const [members, setMembers] = useState([])
 
   const history = useHistory()
 
-  let total = {}
-  let members = []
+  // let total = {}
+  // let members = []
   //TODO fix button
-  let isJoinDisable = false
+  // let isJoinDisable = false
   // console.log(`isJoinDisable = ${isJoinDisable}`)
-  let isDeleteDisable = true
-
-  if (meet) {
-    total = {
-      from: meet.from,
-      to: meet.to
-    }
-
-    if (+total.from > +total.to) {
-      [total.from, total.to] = [total.to, total.from]
-    }
-
-    isDeleteDisable = meet.uid !== currentUser.uid
-
-    if (meet.members) {
-      members = meet.members
-      const count = members.length
-
-      for (let i = 0; i < count; i++) {
-        total = compareRange(total, members[i])
-      }
-
-      isJoinDisable = !!members.find(member => member.uid === meet.uid)
-      console.log(`isJoinDisable = ${isJoinDisable}`)
-    }
-  }
-
-  const selectHandleFrom = (e) => {
-    fromRef.current.value = e.target.value
-    console.log(fromRef.current.value)
-  }
-
-  const selectHandleTo = (e) => {
-    toRef.current.value = e.target.value
-    console.log(toRef.current.value)
-  }
+  // let isDeleteDisable = true
 
   useEffect(() => {
     getMeet()
+      .then(() => {
+        // if (meet) {
+        console.log(meet)
+          setTotal({
+            from: meet.from,
+            to: meet.to
+          })
+
+          if (+total.from > +total.to) {
+            [total.from, total.to] = [total.to, total.from]
+          }
+
+          // setIsDeleteDisable(meet.uid !== currentUser.uid)
+          if (meet.members) {
+            setMembers(meet.members)
+            const count = members.length
+            let tot = total
+
+            for (let i = 0; i < count; i++) {
+              // setTotal(compareRange(total, members[i]))
+              tot = compareRange(total, members[i])
+            }
+
+            setTotal(tot)
+            setIsJoinDisable(!!members.find(member => member.uid === currentUser.uid))
+            // setIsJoinDisable(true)
+            // console.log(`isJoinDisable = ${isJoinDisable}`)
+          }
+        // }
+      })
   }, [currentMeet])
 
   const value = {
@@ -86,10 +85,10 @@ const Meet = () => {
     }
   }
 
-  let optionsFrom = [],
-    optionsTo = []
+  let optionsFrom = []
+  let optionsTo = []
 
-  for (let i = meet.from; i < meet.to; i++) {
+  for (let i = +meet.from; i < meet.to; i++) {
     optionsFrom.push({
       value: i,
       label: `${i}:00`
@@ -103,22 +102,24 @@ const Meet = () => {
     })
   }
 
+  const handleSelectFrom = (e) => {
+    setFrom(e.target.value)
+  }
+
+  const handleSelectTo = (e) => {
+    setTo(e.target.value)
+  }
+
   function handleDelete () {
     setCurrentMeet('')
     deleteMeet(currentMeet)
   }
 
   function handleJoinMeet () {
-    const from = fromRef.current.value
-    const to = toRef.current.value
-
     joinMeet(from, to)
       .then(() => {
         getMeet()
       })
-
-    fromRef.current.value = ''
-    toRef.current.value = ''
   }
 
   return (
@@ -149,13 +150,13 @@ const Meet = () => {
             <Scale value={value}/>
 
             <div className={styles.join}
-                 style={{ display: isJoinDisable ? 'none' : 'flex' }}
+              // style={{ display: isJoinDisable ? 'none' : 'flex' }}
             >
               <span>Ваш голос:</span>
               <span>с</span>
               <select className={styles.select}
-                      ref={fromRef}
-                      onChange={selectHandleFrom}
+                      value={from}
+                      onChange={handleSelectFrom}
               >
                 {optionsFrom.map(option => (
                   <option value={option.value}>{option.label}</option>
@@ -163,8 +164,8 @@ const Meet = () => {
               </select>
               <span>по</span>
               <select className={styles.select}
-                      ref={toRef}
-                      onChange={selectHandleTo}
+                      value={to}
+                      onChange={handleSelectTo}
               >
                 {optionsTo.map(option => (
                   <option value={option.value}>{option.label}</option>
